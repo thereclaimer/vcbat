@@ -3,7 +3,15 @@
 
 #include "vcbat.hpp"
 
-//https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?view=msvc-170
+/***************************************
+ * 
+ * These are all the C/C++ options, including flag values and descriptions
+ * for cl.exe, the MSVC compiler
+ * 
+ * All of the flags and descriptions appear here exactly as they do on the MSDN
+ * https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?view=msvc-170
+ *
+ **************************************/
 
 enum VcBatClOptionsCategory {
     VcBatClOptionsCategory_Optimization   = 0x00,
@@ -598,13 +606,24 @@ struct VcBatClOption {
     union {
 
         struct {
-            u8 category;
             u8 flag;
+            u8 category;
         };
     
         VcBatClOptions key;
     };
 };
+
+inline VcBatClOption
+vcbat_cl_option(
+    const VcBatClOptions option_flag) {
+
+    VcBatClOption option = {0};
+
+    option.key = option_flag;
+
+    return(option);
+}
 
 inline const char*
 vcbat_cl_option_description(
@@ -614,25 +633,6 @@ vcbat_cl_option_description(
     auto option_description   = description_category[option.flag]; 
 
     return(option_description);
-}
-
-inline void
-vcbat_cl_option_descriptions(
-    const VcBatClOption* options,
-    const char**         descriptions,
-    const u64            count) {
-
-    VcBatClOption i_option;
-
-    for (
-        u32 index = 0;
-        index < count;
-        ++index) {
-
-        i_option = options[index];
-
-        descriptions[index] =  VCBAT_CL_OPTIONS_DESCRIPTION_TABLE[i_option.category][i_option.flag];
-    }
 }
 
 #endif //VCBAT_CL_OPTIONS_HPP

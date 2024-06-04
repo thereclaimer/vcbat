@@ -16,5 +16,8 @@ vcbat_win32_main(
 
 	pugi::xml_parse_result result = doc.load_file("..\\vctest\\vctest\\vctest.vcxproj");
 
+	auto option      = vcbat_cl_option(VcBatClOptions_Diagnostics_W0);
+	auto description = vcbat_cl_option_description(option);
+
 	return(0);
 }
