@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vcbat-win32.hpp"
+#include "vcbat-cl.hpp"
 
 #include <pugixml/pugixml.cpp>
 

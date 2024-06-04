@@ -96,7 +96,7 @@ enum VcBatClOptions {
     VcBatClOptions_CodeGeneration_RTCs                         = 0x013E,//    /RTCs	                                Enable stack frame runtime checks.
     VcBatClOptions_CodeGeneration_RTCu                         = 0x013F,//    /RTCu	                                Enables uninitialized local usage checks.
     VcBatClOptions_CodeGeneration_volatile_iso                 = 0x0140,//    /volatile:iso	                        Acquire/release semantics not guaranteed on volatile accesses.
-    VcBatClOptions_CodeGeneration_volatile_ms                  = 0x0141 //    /volatile:ms	                        Acquire/release semantics guaranteed on volatile accesses.
+    VcBatClOptions_CodeGeneration_volatile_ms                  = 0x0141,//    /volatile:ms	                        Acquire/release semantics guaranteed on volatile accesses.
     VcBatClOptions_OutputFiles_doc                             = 0x0200,//    /doc	                                Processes documentation comments to an XML file. 
     VcBatClOptions_OutputFiles_FA                              = 0x0201,//    /FA	                                Configures an assembly listing file. 
     VcBatClOptions_OutputFiles_Fa                              = 0x0202,//    /Fa	                                Creates an assembly listing file. 
@@ -107,7 +107,7 @@ enum VcBatClOptions {
     VcBatClOptions_OutputFiles_Fo                              = 0x0207,//    /Fo	                                Creates an object file. 
     VcBatClOptions_OutputFiles_Fp                              = 0x0208,//    /Fp	                                Specifies a precompiled header file name. 
     VcBatClOptions_OutputFiles_FR                              = 0x0209,//    /FR, /Fr	                            Name generated .sbr browser files. /Fr is deprecated. 
-    VcBatClOptions_OutputFiles_Ft                              = 0x020A //    /Ft<dir>	                            Location of the header files generated for #import.
+    VcBatClOptions_OutputFiles_Ft                              = 0x020A,//    /Ft<dir>	                            Location of the header files generated for #import.
     VcBatClOptions_Preprocessor_AI                             = 0x0300,//    /AI<dir>	                            Specifies a directory to search to resolve file references passed to the #using directive.
     VcBatClOptions_Preprocessor_C                              = 0x0301,//    /C	                                Preserves comments during preprocessing.
     VcBatClOptions_Preprocessor_D                              = 0x0302,//    /D<name>{=|#}<text>                   Defines constants and macros.
@@ -122,7 +122,7 @@ enum VcBatClOptions {
     VcBatClOptions_Preprocessor_PH                             = 0x031B,//    /PH	                                Generate #pragma file_hash when preprocessing.
     VcBatClOptions_Preprocessor_U                              = 0x031C,//    /U<name>	                            Removes a predefined macro.
     VcBatClOptions_Preprocessor_u                              = 0x031D,//    /u	                                Removes all predefined macros.
-    VcBatClOptions_Preprocessor_X                              = 0x031E //    /X	                                Ignores the standard include directory.
+    VcBatClOptions_Preprocessor_X                              = 0x031E, //    /X	                                Ignores the standard include directory.
     VcBatClOptions_HeaderModules_exportHeader                  = 0x0400,//    /exportHeader	                        Create the header units files (.ifc) specified by the input arguments.
     VcBatClOptions_HeaderModules_headerUnit                    = 0x0401,//    /headerUnit	                        Specify where to find the header unit file (.ifc) for the specified header.
     VcBatClOptions_HeaderModules_headerName                    = 0x0402,//    /headerName	                        Build a header unit from the specified header.
@@ -197,7 +197,7 @@ enum VcBatClOptions {
     VcBatClOptions_Language_Zo                                 = 0x0539,//    /Zo[-]	                            Generate richer debugging information for optimized code.
     VcBatClOptions_Language_Zp                                 = 0x0530,//    /Zp[n]	                            Packs structure members.
     VcBatClOptions_Language_Zs                                 = 0x053A,//    /Zs	                                Checks syntax only.
-    VcBatClOptions_Language_ZW                                 = 0x053B //    /ZW	                                Produces an output file to run on the Windows Runtime.
+    VcBatClOptions_Language_ZW                                 = 0x053B,//    /ZW	                                Produces an output file to run on the Windows Runtime.
     VcBatClOptions_Linking_F                                   = 0x0600,//    /F	                                Sets stack size.
     VcBatClOptions_Linking_LD                                  = 0x0601,//    /LD	                                Creates a dynamic-link library.
     VcBatClOptions_Linking_LDd                                 = 0x0602,//    /LDd	                                Creates a debug dynamic-link library.
@@ -241,7 +241,7 @@ enum VcBatClOptions {
     VcBatClOptions_Miscellaneous_Yl                            = 0x071D,//    /Yl	                                Injects a PCH reference when creating a debug library.
     VcBatClOptions_Miscellaneous_Yu                            = 0x071E,//    /Yu	                                Uses a precompiled header file during build.
     VcBatClOptions_Miscellaneous_Y                             = 0x071F,//    /Y-	                                Ignores all other precompiled-header compiler options in the current build.
-    VcBatClOptions_Miscellaneous_Zm                            = 0x072A //    /Zm	                                Specifies the precompiled header memory allocation limit.
+    VcBatClOptions_Miscellaneous_Zm                            = 0x072A,//    /Zm	                                Specifies the precompiled header memory allocation limit.
     VcBatClOptions_Diagnostics_diagnostics_caret               = 0x0800,//    /diagnostics:caret[-]	                Diagnostics format: prints column and the indicated line of source.
     VcBatClOptions_Diagnostics_diagnostics_classic             = 0x0801,//    /diagnostics:classic	                Use legacy diagnostics format.
     VcBatClOptions_Diagnostics_diagnostics                     = 0x0802,//    /diagnostics	                        Diagnostics format: prints column information.
@@ -261,9 +261,9 @@ enum VcBatClOptions {
     VcBatClOptions_Diagnostics_WL                              = 0x0810,//    /WL	                                Enable one-line diagnostics for error and warning messages when compiling C++ source code from the command line.
     VcBatClOptions_Diagnostics_wo                              = 0x0811,//    /wo<n>	                            Display the specified warning only once.
     VcBatClOptions_Diagnostics_Wv                              = 0x0812,//    /Wv:xx[.yy[.zzzzz]]	                Disable warnings introduced after the specified version of the compiler.
-    VcBatClOptions_Diagnostics_WX                              = 0x0813 //    /WX                                   Treat warnings as errors.
+    VcBatClOptions_Diagnostics_WX                              = 0x0813,//    /WX                                   Treat warnings as errors.
     VcBatClOptions_Experimental_experimental_log               = 0x0900,//    /experimental:log	                    Enables experimental structured SARIF output.
-    VcBatClOptions_Experimental_experimental_module            = 0x0901 //    /experimental:module	                Enables experimental module support.
+    VcBatClOptions_Experimental_experimental_module            = 0x0901,//    /experimental:module	                Enables experimental module support.
     VcBatClOptions_Deprecated_clr                              = 0x0A00,//    /clr:noAssembly	                    Deprecated. Use /LN (Create MSIL Module) instead.
     VcBatClOptions_Deprecated_errorReport                      = 0x0A01,//    /errorReport	                        Deprecated. Error reporting is controlled by Windows Error Reporting (WER) settings.
     VcBatClOptions_Deprecated_experimental_preprocessor        = 0x0A02,//    /experimental:preprocessor	        Deprecated. Enables experimental conforming preprocessor support. Use /Zc:preprocessor
@@ -284,7 +284,7 @@ enum VcBatClOptions {
 };
 
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION[] = {
     "Produces code that is optimized for a specified architecture, or for a range of architectures.",
     "Creates small code.",
     "Creates fast code.",
@@ -298,7 +298,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION[] = {
     "Omits frame pointer. (x86 only)"
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION[] = {
     "Minimum CPU architecture requirements.",
     "Produces an output file to run on the common language runtime.",
     "Turn off implicit emission of System::GC::KeepAlive(this).",
@@ -367,7 +367,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION[] = {
     "Acquire/release semantics guaranteed on volatile accesses."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES[] = {
     "Processes documentation comments to an XML file.",
     "Configures an assembly listing file.",
     "Creates an assembly listing file.",
@@ -381,7 +381,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES[] = {
     "Location of the header files generated for #import."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR[] = {
     "Specifies a directory to search to resolve file references passed to the #using directive.",
     "Preserves comments during preprocessing.",
     "Defines constants and macros.",
@@ -399,7 +399,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR[] = {
     "Ignores the standard include directory."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES[] = {
     "Create the header units files (.ifc) specified by the input arguments.",
     "Specify where to find the header unit file (.ifc) for the specified header.",
     "Build a header unit from the specified header.",
@@ -413,7 +413,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES[] = {
     "Treat #include as import."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE[] = {
     "Enable coroutines (resumable functions) extensions.",
     "Enable standard C++20 coroutine support with earlier language versions.",
     "Show N constexpr evaluations in diagnostics (default: 10).",
@@ -444,7 +444,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE[] = {
     "Enforce the new Standard C++ meaning for auto (on by default).",
     "Enable or disable C++20 native u8 literal support as const char8_t (off by default, except under /std:c++20).",
     "Enable Standard C++ rules for inferred enum base types (Off b y default, not implied by /permissive-).",
-    "Enforce Standard C++ rules for extern "C" functions (implied by /permissive-).",
+    "Enforce Standard C++ rules for extern \"C\" functions (implied by /permissive-).",
     "Enable external linkage for constexpr variables (off by default).",
     "Enforce Standard C++ for scoping rules (on by default).",
     "Enforce Standard C++ goto rules around local variable initialization (implied by /permissive-).",
@@ -481,7 +481,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE[] = {
 };
 
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_LINKING[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_LINKING[] = {
     "Sets stack size.",
     "Creates a dynamic-link library.",
     "Creates a debug dynamic-link library.",
@@ -493,7 +493,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_LINKING[] = {
     "Compiles to create a debug multithreaded executable file, by using LIBCMTD.lib."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS[] = {
     "Lists the compiler options.",
     "Specifies a response file.",
     "Enables code analysis.",
@@ -531,7 +531,7 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS[] = {
     "Specifies the precompiled header memory allocation limit."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS[] = {
     "Diagnostics format: prints column and the indicated line of source.",
     "Use legacy diagnostics format.",
     "Diagnostics format: prints column information.",
@@ -554,12 +554,12 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS[] = {
     "Treat warnings as errors."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_EXPERIMENTAL[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_EXPERIMENTAL[] = {
     "Enables experimental structured SARIF output.",
     "Enables experimental module support."
 };
 
-const char* const VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED[] = {
+const char* VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED[] = {
     "Deprecated. Use /LN (Create MSIL Module) instead.",
     "Deprecated. Error reporting is controlled by Windows Error Reporting (WER) settings.",
     "Deprecated. Enables experimental conforming preprocessor support. Use /Zc:preprocessor",
@@ -579,5 +579,60 @@ const char* const VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED[] = {
     "Removed in Visual Studio 2015. Generates function prototypes."
 };
 
+
+const char *const * VCBAT_CL_OPTIONS_DESCRIPTION_TABLE[] {
+    VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION,
+    VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION,
+    VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES,
+    VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR,
+    VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES,
+    VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE,
+    VCBAT_CL_OPTIONS_DESCRIPTION_LINKING,
+    VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS,
+    VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS,
+    VCBAT_CL_OPTIONS_DESCRIPTION_EXPERIMENTAL,
+    VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED
+};
+
+struct VcBatClOption {
+    union {
+
+        struct {
+            u8 category;
+            u8 flag;
+        };
+    
+        VcBatClOptions key;
+    };
+};
+
+inline const char*
+vcbat_cl_option_description(
+    const VcBatClOption option) {
+
+    auto description_category = VCBAT_CL_OPTIONS_DESCRIPTION_TABLE[option.category];
+    auto option_description   = description_category[option.flag]; 
+
+    return(option_description);
+}
+
+inline void
+vcbat_cl_option_descriptions(
+    const VcBatClOption* options,
+    const char**         descriptions,
+    const u64            count) {
+
+    VcBatClOption i_option;
+
+    for (
+        u32 index = 0;
+        index < count;
+        ++index) {
+
+        i_option = options[index];
+
+        descriptions[index] =  VCBAT_CL_OPTIONS_DESCRIPTION_TABLE[i_option.category][i_option.flag];
+    }
+}
 
 #endif //VCBAT_CL_OPTIONS_HPP
