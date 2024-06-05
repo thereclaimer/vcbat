@@ -38,6 +38,19 @@ vcbat_win32_window_create(
 
 b8
 vcbat_win32_window_update_and_render(
-    VCBatWin32WindowRef window);
+    VCBatWin32WindowPtr window);
+
+//-------------------------------------------------
+// OPENGL
+//-------------------------------------------------
+ 
+HGLRC
+vcbat_win32_opengl_initialize(
+    HDC win32_handle_device_context);
+
+void
+vcbat_win32_opengl_render(
+    u32 window_width,
+    u32 window_height);
 
 #endif // VCBAT_WIN32_HPP

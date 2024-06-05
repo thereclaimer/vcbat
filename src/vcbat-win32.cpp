@@ -2,9 +2,9 @@
 
 #include "vcbat-win32.hpp"
 #include "vcbat-win32-window.cpp"
+#include "vcbat-win32-opengl.cpp"
 
-
-int 
+s32 
 vcbat_win32_main(
     HINSTANCE instance, 
     HINSTANCE prev_instance, 
@@ -20,7 +20,7 @@ vcbat_win32_main(
 
     while(running) {
 
-        running = vcbat_win32_window_update_and_render(window);
+        running = vcbat_win32_window_update_and_render(&window);
     }
 
     return(0);
