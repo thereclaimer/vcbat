@@ -1,7 +1,8 @@
 #pragma once
 
 #include "vcbat-win32.hpp"
-#include "vcbat-cl.hpp"
+#include "vcbat-win32-window.cpp"
+#include "vcbat-win32-opengl.cpp"
 
 #include <pugixml/pugixml.cpp>
 
@@ -11,13 +12,6 @@ vcbat_win32_main(
 	HINSTANCE hPrevInstance, 
 	PWSTR     pCmdLine, 
 	int       nCmdShow) {
-
-	pugi::xml_document doc;
-
-	pugi::xml_parse_result result = doc.load_file("..\\vctest\\vctest\\vctest.vcxproj");
-
-	auto option      = vcbat_cl_option(VcBatClOptions_Diagnostics_W0);
-	auto description = vcbat_cl_option_description(option);
 
 	return(0);
 }
