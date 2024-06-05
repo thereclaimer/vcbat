@@ -2,14 +2,11 @@
 #define VCBAT_WIN32_HPP
 
 #include <Windows.h>
-
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif  //WIN32_LEAN_AND_MEAN
-
-#include <pugixml/pugixml.hpp>
+#include <GL/GL.h>
+#include <tchar.h>
 
 #include "vcbat.hpp"
+#include "vcbat-imgui.hpp"
 
 #define vcbat_win32_main WINAPI wWinMain
 
@@ -19,30 +16,28 @@
 //-------------------------------------------------
 // WINDOW
 //-------------------------------------------------
-
+ 
 struct VCBatWin32Window {
-    u32  window_width;
-    u32  window_height;
-    u32  monitor_width;
-    u32  monitor_height;
-    HWND win32_handle_window;
-    HDC  win32_handle_device_context;
+    u32           window_width;
+    u32           window_height;
+    u32           monitor_width;
+    u32           monitor_height;
+    MSG           message;
+    HWND          handle_window;
+    HDC           handle_device_context;
+    HGLRC         handle_opengl;
 };
 
 typedef VCBatWin32Window* VCBatWin32WindowPtr;
 typedef VCBatWin32Window& VCBatWin32WindowRef;
 
-b8
+VCBatWin32Window
 vcbat_win32_window_create(
-    HINSTANCE           instance);
+    HINSTANCE instance,
+    s32       cmd_show);
 
-//-------------------------------------------------
-// OPENGL
-//-------------------------------------------------
-
-HGLRC
-vcbat_win32_opengl_initialize(
-    HWND win32_handle_window,
-    HDC  win32_handle_device_context);
+b8
+vcbat_win32_window_update_and_render(
+    VCBatWin32WindowRef window);
 
 #endif // VCBAT_WIN32_HPP

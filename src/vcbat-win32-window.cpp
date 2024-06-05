@@ -1,82 +1,68 @@
 #pragma once
 
-#include "vcbat.hpp"
 #include "vcbat-win32.hpp"
 
-global VCBatWin32Window win32_window;
+internal b8
+vcbat_win32_window_update_and_render(
+    VCBatWin32WindowRef window) {
+    
+    while (PeekMessage(&window.message, 0,0,0, PM_REMOVE)) {
+        TranslateMessage(&window.message);
+        DispatchMessage(&window.message);
+    }
 
-LRESULT WINAPI 
+    return(true);
+}
+
+internal LRESULT CALLBACK 
 vcbat_win32_window_callback(
-    HWND   hWnd,
-    UINT   msg,
+    HWND   hwnd,
+    UINT   uMsg,
     WPARAM wParam,
     LPARAM lParam) {
     
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
+    LRESULT def_window_proc_result = 
+        DefWindowProc(
+            hwnd,
+            uMsg,
+            wParam,
+            lParam);
 
-    switch (msg)
-    {
-        case WM_SIZE: {
-
-            if (wParam != SIZE_MINIMIZED) {
-                g_Width =  LOWORD(lParam);
-                g_Height = HIWORD(lParam);
-            }
-
-        } break;
-            
-            return 0;
-        case WM_SYSCOMMAND:
-            if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
-                return 0;
-            break;
-        case WM_DESTROY:
-            ::PostQuitMessage(0);
-            return 0;
-    }
-    return ::DefWindowProcW(hWnd, msg, wParam, lParam);
+    return(def_window_proc_result);
 }
 
-internal void
+internal VCBatWin32Window
 vcbat_win32_window_create(
-    HINSTANCE           instance) {
+    HINSTANCE instance,
+    s32       cmd_show) {
 
-    win32_window = {0};
+    VCBatWin32Window window = {0};
 
-    // Register the main window class.
-    WNDCLASS window_class      = {0};
-    window_class.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
+    WNDCLASS window_class = {0};
     window_class.lpfnWndProc   = (WNDPROC)vcbat_win32_window_callback;
     window_class.hInstance     = instance;
-    window_class.lpszClassName = "VCBatWindowClass";
+    window_class.lpszClassName = L"VCBatWindowClass";
+    window_class.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
 
-    VCBAT_ASSERT(RegisterClass(&window_class));
+    RegisterClass(&window_class);
 
-    //create the window
-    win32_window.win32_handle_window = 
+    HWND window_handle = 
         CreateWindowEx(
             0,
             window_class.lpszClassName,
-            L"VCBat",
+            L"VCBat", 
             WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT,
-            CW_USEDEFAULT,
-            VCBAT_WIN32_WINDOW_INITIAL_WIDTH,
-            VCBAT_WIN32_WINDOW_INITIAL_HEIGHT,
+            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
             NULL,
             NULL,
             instance,
             NULL);
 
-    VCBAT_ASSERT(win32_window.win32_handle_window);
+    ShowWindow(
+        window_handle,
+        cmd_show);
 
-    //get the device context
-    win32_window.win32_handle_device_context = GetDC(win32_window.win32_handle_window);
-    VCBAT_ASSERT(win32_window.win32_handle_device_context);
+    window.handle_window = window_handle;
 
-    //initialize opengl
-
-
-    return(true);
+    return(window);
 }

@@ -2,16 +2,26 @@
 
 #include "vcbat-win32.hpp"
 #include "vcbat-win32-window.cpp"
-#include "vcbat-win32-opengl.cpp"
 
-#include <pugixml/pugixml.cpp>
 
-internal s32 
+int 
 vcbat_win32_main(
-	HINSTANCE hInstance, 
-	HINSTANCE hPrevInstance, 
-	PWSTR     pCmdLine, 
-	int       nCmdShow) {
+    HINSTANCE instance, 
+    HINSTANCE prev_instance, 
+    PWSTR     cmd_line, 
+    s32       cmd_show) {
 
-	return(0);
+    VCBatWin32Window window = 
+        vcbat_win32_window_create(
+            instance,
+            cmd_show);
+
+    b8 running = true;
+
+    while(running) {
+
+        running = vcbat_win32_window_update_and_render(window);
+    }
+
+    return(0);
 }

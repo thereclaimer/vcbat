@@ -130,7 +130,7 @@ enum VcBatClOptions {
     VcBatClOptions_Preprocessor_PH                             = 0x031B,//    /PH	                                Generate #pragma file_hash when preprocessing.
     VcBatClOptions_Preprocessor_U                              = 0x031C,//    /U<name>	                            Removes a predefined macro.
     VcBatClOptions_Preprocessor_u                              = 0x031D,//    /u	                                Removes all predefined macros.
-    VcBatClOptions_Preprocessor_X                              = 0x031E, //    /X	                                Ignores the standard include directory.
+    VcBatClOptions_Preprocessor_X                              = 0x031E,//    /X	                                Ignores the standard include directory.
     VcBatClOptions_HeaderModules_exportHeader                  = 0x0400,//    /exportHeader	                        Create the header units files (.ifc) specified by the input arguments.
     VcBatClOptions_HeaderModules_headerUnit                    = 0x0401,//    /headerUnit	                        Specify where to find the header unit file (.ifc) for the specified header.
     VcBatClOptions_HeaderModules_headerName                    = 0x0402,//    /headerName	                        Build a header unit from the specified header.
