@@ -28,6 +28,7 @@ struct VCBatWin32Window {
     HWND          handle_window;
     HDC           handle_device_context;
     HGLRC         handle_opengl;
+    b8            quit;
 };
 
 typedef VCBatWin32Window* VCBatWin32WindowPtr;

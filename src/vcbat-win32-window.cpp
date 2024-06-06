@@ -71,6 +71,19 @@ vcbat_win32_window_on_wm_size(
     return(true);
 }
 
+internal bool
+vcbat_win32_window_on_wm_quit(
+    VCBatWin32WindowPtr win32_window_ptr) {
+
+    if (!win32_window_ptr) {
+        return(true);
+    }
+
+    win32_window_ptr->quit = true; 
+
+    return(true);
+}
+
 internal LRESULT CALLBACK 
 vcbat_win32_window_callback(
     HWND   window_handle,
@@ -95,6 +108,12 @@ vcbat_win32_window_callback(
 
         case WM_SIZE: {
             result = vcbat_win32_window_on_wm_size(win32_window_ptr);
+        } break;
+
+        case WM_CLOSE:
+        case WM_QUIT:
+        case WM_DESTROY: {
+            result = vcbat_win32_window_on_wm_quit(win32_window_ptr);
         } break;
 
         default: {
@@ -163,6 +182,7 @@ vcbat_win32_window_create(
     window.handle_window         = window_handle;
     window.handle_device_context = device_context_handle;
     window.handle_opengl         = opengl_handle;
+    window.quit                  = false;
 
     return(window);
 }

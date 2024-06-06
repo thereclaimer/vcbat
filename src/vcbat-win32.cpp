@@ -18,7 +18,7 @@ vcbat_win32_main(
 
     b8 running = true;
 
-    while(running) {
+    while(running && !window.quit) {
 
         running = vcbat_win32_window_update_and_render(&window);
     }
