@@ -23,6 +23,8 @@ struct VCBatWin32Window {
     u32           monitor_width;
     u32           monitor_height;
     MSG           message;
+    WPARAM        message_param_w;
+    LPARAM        message_param_l;
     HWND          handle_window;
     HDC           handle_device_context;
     HGLRC         handle_opengl;

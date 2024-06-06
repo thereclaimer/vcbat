@@ -5,10 +5,8 @@
 #define WM_VCBAT_WINDOW (WM_USER+1)
 
 internal b8
-vcbat_win32_window_update_and_render(
+vcbat_win32_window_process_events(
     VCBatWin32WindowPtr window) {
-    
-    VCBAT_ASSERT(window);
 
     PostMessage(
         window->handle_window,
@@ -33,7 +31,42 @@ vcbat_win32_window_update_and_render(
         }
     }
 
+    return(true);
+}
+
+internal b8
+vcbat_win32_window_update_and_render(
+    VCBatWin32WindowPtr window) {
+    
+    VCBAT_ASSERT(window);
+
+    //process window events
+    b8 result = vcbat_win32_window_process_events(window);
+    if (!result) {
+        return(false);
+    }
+
+    //render opengl
+    vcbat_win32_opengl_render(
+        window->window_width,
+        window->window_height);
+
+    //swap buffers
     SwapBuffers(window->handle_device_context);
+
+    return(true);
+}
+
+internal bool
+vcbat_win32_window_on_wm_size(
+    VCBatWin32WindowPtr win32_window_ptr) {
+
+    if (!win32_window_ptr) {
+        return(true);
+    }
+
+    win32_window_ptr->window_width  = LOWORD(win32_window_ptr->message_param_l);
+    win32_window_ptr->window_height = HIWORD(win32_window_ptr->message_param_l);
 
     return(true);
 }
@@ -47,6 +80,13 @@ vcbat_win32_window_callback(
     
     local VCBatWin32WindowPtr win32_window_ptr = NULL;
 
+    if (win32_window_ptr) {
+        win32_window_ptr->message_param_w = w_param;
+        win32_window_ptr->message_param_l = l_param;
+    }
+
+    b8 result = true;
+
     switch (message) {
 
         case WM_VCBAT_WINDOW: {
@@ -54,18 +94,20 @@ vcbat_win32_window_callback(
         } break;
 
         case WM_SIZE: {
+            result = vcbat_win32_window_on_wm_size(win32_window_ptr);
+        } break;
 
+        default: {
+            result = 
+                DefWindowProc(
+                    window_handle,
+                    message,
+                    w_param,
+                    l_param);
         } break;
     }
 
-    LRESULT def_window_proc_result = 
-        DefWindowProc(
-            window_handle,
-            message,
-            w_param,
-            l_param);
-
-    return(def_window_proc_result);
+    return(result);
 }
 
 internal VCBatWin32Window
@@ -116,6 +158,8 @@ vcbat_win32_window_create(
         window_handle,
         cmd_show);
 
+    window.window_width          = VCBAT_WIN32_WINDOW_INITIAL_WIDTH;
+    window.window_height         = VCBAT_WIN32_WINDOW_INITIAL_HEIGHT;
     window.handle_window         = window_handle;
     window.handle_device_context = device_context_handle;
     window.handle_opengl         = opengl_handle;
