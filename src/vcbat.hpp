@@ -5,7 +5,6 @@
 #include "vcbat-platform-api.hpp"
 
 struct VCBat{
-
 };
 
 VCBat
