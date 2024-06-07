@@ -1,7 +1,7 @@
 #ifndef VCBAT_CL_OPTIONS_HPP
 #define VCBAT_CL_OPTIONS_HPP
 
-#include "vcbat.hpp"
+#include "vcbat-types.hpp"
 
 /***************************************
  * 

@@ -46,10 +46,16 @@ vcbat_win32_window_update_and_render(
         return(false);
     }
 
+    //start new imgui frame
+    vcbat_win32_imgui_frame_start();
+
     //render opengl
     vcbat_win32_opengl_render(
         window->window_width,
         window->window_height);
+
+    //render the imgui frame
+    vcbat_win32_imgui_frame_render();
 
     //swap buffers
     SwapBuffers(window->handle_device_context);
@@ -172,6 +178,11 @@ vcbat_win32_window_create(
         vcbat_win32_opengl_initialize(
             device_context_handle);
     VCBAT_ASSERT(opengl_handle);
+
+    //initialize ImGui
+    ImGuiContext* imgui_context = 
+        vcbat_win32_imgui_initialize(window_handle);
+    VCBAT_ASSERT(imgui_context);
 
     ShowWindow(
         window_handle,

@@ -28,6 +28,7 @@ struct VCBatWin32Window {
     HWND          handle_window;
     HDC           handle_device_context;
     HGLRC         handle_opengl;
+    ImGuiContext* imgui_context;
     b8            quit;
 };
 
@@ -43,6 +44,52 @@ b8
 vcbat_win32_window_update_and_render(
     VCBatWin32WindowPtr window);
 
+
+//-------------------------------------------------
+// PLATFORM API
+//-------------------------------------------------
+
+VCBatPlatformApi
+vcbat_win32_platform_api_create_and_init();
+
+memory
+vcbat_win32_platform_api_allocate_memory(
+    u64 size);
+
+void
+vcbat_win32_platform_api_free_memory(
+    handle memory,
+    u64 size);
+
+u64
+vcbat_win32_platform_api_file_size_bytes(
+    HANDLE file_handle,
+    b8     terminate);
+
+HANDLE
+vcbat_win32_platform_api_file_open(
+    char* file_path,
+    b8    create_new);
+
+void
+vcbat_win32_platform_api_file_close(
+    HANDLE file_handle);
+
+void
+vcbat_win32_platform_api_file_read(
+    HANDLE file_handle,
+    u64    offset,
+    u64    allocated_buffer_size,
+    memory allocated_buffer,
+    b8     terminate);
+
+void
+vcbat_win32_platform_api_file_write(
+    handle file_handle,
+    u64    allocated_buffer_size,
+    u64    offset,
+    memory allocated_buffer);
+
 //-------------------------------------------------
 // OPENGL
 //-------------------------------------------------
@@ -55,5 +102,19 @@ void
 vcbat_win32_opengl_render(
     u32 window_width,
     u32 window_height);
+
+//-------------------------------------------------
+// IMGUI
+//-------------------------------------------------
+ 
+ImGuiContext*
+vcbat_win32_imgui_initialize(
+    HWND win32_handle_window);
+
+void
+vcbat_win32_imgui_frame_start();
+
+void
+vcbat_win32_imgui_frame_render();
 
 #endif // VCBAT_WIN32_HPP
