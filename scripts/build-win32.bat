@@ -2,10 +2,10 @@
 
 @set cl_preprocessor= /D UNICODE /D _UNICODE
 @set cl_flags=        /MD /utf-8 /Zi /Fe:bin\VCBat.exe /Fd:bin\VCBat.pdb /Fo:bin\VCBat.obj
-@set cl_includes=     /I .\src\
+@set cl_includes=     /I .\src\ /I .\vcpkg_installed\x64-windows\include
 @set cl_source=       src\vcbat-win32.cpp
-@set cl_linker=       /link
-@set cl_libs=         user32.lib opengl32.lib gdi32.lib
+@set cl_linker=       /link /LIBPATH:vcpkg_installed\x64-windows\lib
+@set cl_libs=         user32.lib opengl32.lib gdi32.lib imgui.lib
 
 call cl.exe       ^
 %cl_preprocessor% ^
