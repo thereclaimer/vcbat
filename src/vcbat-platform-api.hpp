@@ -26,8 +26,8 @@ typedef  u64
 typedef handle
 (*func_vcbat_platform_file_open)
 (
-    char* file_path,
-    b8    create_new
+    const wchar_t* file_path,
+    b8             create_new
 );
 
 typedef void

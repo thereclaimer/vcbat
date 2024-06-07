@@ -68,8 +68,8 @@ vcbat_win32_platform_api_file_size_bytes(
 
 HANDLE
 vcbat_win32_platform_api_file_open(
-    char* file_path,
-    b8    create_new);
+    const wchar_t* file_path,
+          b8       create_new);
 
 void
 vcbat_win32_platform_api_file_close(

@@ -67,8 +67,8 @@ vcbat_win32_platform_api_file_size_bytes(
 
 internal HANDLE
 vcbat_win32_platform_api_file_open(
-    char* file_path,
-    b8    create_new) {
+    const wchar_t* file_path,
+          b8       create_new) {
 
     HANDLE file_handle = 
         CreateFile(
