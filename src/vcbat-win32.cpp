@@ -5,6 +5,7 @@
 #include "vcbat-win32-opengl.cpp"
 #include "vcbat-win32-imgui.cpp"
 #include "vcbat-win32-platform-api.cpp"
+#include "vcbat.cpp"
 
 s32 
 vcbat_win32_main(
@@ -18,11 +19,19 @@ vcbat_win32_main(
             instance,
             cmd_show);
 
+    VCBatPlatformApi win32_platform_api = 
+        vcbat_win32_platform_api_create_and_init();
+
+    VCBat vcbat = 
+        vcbat_create_and_initialize(win32_platform_api);
+
     b8 running = true;
 
     while(running && !window.quit) {
 
         running = vcbat_win32_window_update_and_render(&window);
+
+        vcbat_update(vcbat);
     }
 
     return(0);
