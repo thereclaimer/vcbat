@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vcbat-imgui.hpp"
+#include "vcbat.hpp"
 
 VCBatImGui
 vcbat_imgui_create_and_initialize() {
