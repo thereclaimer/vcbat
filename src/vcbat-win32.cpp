@@ -1,11 +1,6 @@
 #pragma once
 
 #include "vcbat-win32.hpp"
-#include "vcbat-win32-window.cpp"
-#include "vcbat-win32-opengl.cpp"
-#include "vcbat-win32-imgui.cpp"
-#include "vcbat-win32-platform-api.cpp"
-#include "vcbat.cpp"
 
 s32 
 vcbat_win32_main(
@@ -37,4 +32,4 @@ vcbat_win32_main(
     }
 
     return(0);
-} 
+}

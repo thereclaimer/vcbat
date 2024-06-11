@@ -110,6 +110,15 @@ vcbat_win32_opengl_render(
 // IMGUI
 //-------------------------------------------------
  
+extern IMGUI_IMPL_API LRESULT 
+ImGui_ImplWin32_WndProcHandler(
+    HWND   hWnd, 
+    UINT   msg, 
+    WPARAM wParam, 
+    LPARAM lParam);
+
+#define vcbat_win32_imgui_window_callback ImGui_ImplWin32_WndProcHandler
+
 ImGuiContext*
 vcbat_win32_imgui_initialize(
     HWND win32_handle_window);

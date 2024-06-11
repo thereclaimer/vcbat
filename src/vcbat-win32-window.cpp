@@ -106,6 +106,17 @@ vcbat_win32_window_callback(
     WPARAM w_param,
     LPARAM l_param) {
     
+    LRESULT imgui_result = 
+        vcbat_win32_imgui_window_callback(
+            window_handle,
+            message,
+            w_param,
+            l_param);
+
+    if (imgui_result) {
+        return(true);
+    }
+
     local VCBatWin32WindowPtr win32_window_ptr = NULL;
 
     if (win32_window_ptr) {
