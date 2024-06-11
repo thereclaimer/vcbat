@@ -40,10 +40,13 @@ vcbat_win32_window_create(
     HINSTANCE instance,
     s32       cmd_show);
 
-b8
-vcbat_win32_window_update_and_render(
+b8 
+vcbat_win32_window_update(
     VCBatWin32WindowPtr window);
 
+b8
+vcbat_win32_window_render(
+    VCBatWin32WindowPtr window);
 
 //-------------------------------------------------
 // PLATFORM API

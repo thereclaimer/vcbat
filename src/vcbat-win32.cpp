@@ -29,9 +29,11 @@ vcbat_win32_main(
 
     while(running && !window.quit) {
 
-        running = vcbat_win32_window_update_and_render(&window);
+        running = vcbat_win32_window_update(&window);
 
         vcbat_update(vcbat);
+
+        vcbat_win32_window_render(&window);
     }
 
     return(0);

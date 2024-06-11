@@ -35,9 +35,9 @@ vcbat_win32_window_process_events(
 }
 
 internal b8
-vcbat_win32_window_update_and_render(
+vcbat_win32_window_update(
     VCBatWin32WindowPtr window) {
-    
+
     VCBAT_ASSERT(window);
 
     //process window events
@@ -48,6 +48,13 @@ vcbat_win32_window_update_and_render(
 
     //start new imgui frame
     vcbat_win32_imgui_frame_start();
+
+    return(true);
+}
+
+internal b8
+vcbat_win32_window_render(
+    VCBatWin32WindowPtr window) {
 
     //render opengl
     vcbat_win32_opengl_render(
@@ -61,7 +68,9 @@ vcbat_win32_window_update_and_render(
     SwapBuffers(window->handle_device_context);
 
     return(true);
+
 }
+
 
 internal bool
 vcbat_win32_window_on_wm_size(
