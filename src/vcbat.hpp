@@ -22,27 +22,6 @@ void
 vcbat_imgui_update(
     VCBatImGuiRef vcbat_imgui_ref);
 
-
-//-------------------------------------------------
-// CORE
-//-------------------------------------------------
-
-struct VCBat{
-    VCBatImGui imgui;
-};
-
-typedef VCBat& VCBatRef;
-
-VCBat
-vcbat_create_and_initialize(
-    VCBatPlatformApi platform_api);
-
-void
-vcbat_update(
-    VCBatRef vcbat_ref);
-
-
-
 //-------------------------------------------------
 // MEMORY
 //-------------------------------------------------
@@ -57,7 +36,6 @@ struct VCBatMemoryArena {
     VCBatMemoryArena* next;
 };
 
-
 struct VCBatMemory {
     u64    core_memory_size_bytes;
     memory core_memory;
@@ -68,7 +46,26 @@ typedef VCBatMemory* VCBatMemoryPtr;
 typedef VCBatMemory& VCBatMemoryRef;
 
 VCBatMemory
-vcbat_memory_create_and_init();
+vcbat_memory_create_and_initialize();
+
+//-------------------------------------------------
+// CORE
+//-------------------------------------------------
+
+struct VCBat{
+    VCBatImGui  imgui;
+    VCBatMemory memory;
+};
+
+typedef VCBat& VCBatRef;
+
+VCBat
+vcbat_create_and_initialize(
+    VCBatPlatformApi platform_api);
+
+void
+vcbat_update(
+    VCBatRef vcbat_ref);
 
 
 #endif //VCBAT_HPP

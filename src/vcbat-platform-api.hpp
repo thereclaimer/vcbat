@@ -65,15 +65,14 @@ struct VCBatPlatformApi {
     func_vcbat_platform_file_read       file_read;
 };
 
-global VCBatPlatformApi platform_api;
+global VCBatPlatformApi vcbat_platform_api;
 
-#define vcbat_platform_api_platform_window platform_api.platform_window
-#define vcbat_platform_api_memory_allocate platform_api.memory_allocate
-#define vcbat_platform_api_memory_free     platform_api.memory_free
-#define vcbat_platform_api_file_size       platform_api.file_size
-#define vcbat_platform_api_file_open       platform_api.file_open
-#define vcbat_platform_api_file_close      platform_api.file_close
-#define vcbat_platform_api_file_write      platform_api.file_write
-#define vcbat_platform_api_file_read       platform_api.file_read
+#define vcbat_platform_api_memory_allocate vcbat_platform_api.memory_allocate
+#define vcbat_platform_api_memory_free     vcbat_platform_api.memory_free
+#define vcbat_platform_api_file_size       vcbat_platform_api.file_size
+#define vcbat_platform_api_file_open       vcbat_platform_api.file_open
+#define vcbat_platform_api_file_close      vcbat_platform_api.file_close
+#define vcbat_platform_api_file_write      vcbat_platform_api.file_write
+#define vcbat_platform_api_file_read       vcbat_platform_api.file_read
 
 #endif //VCBAT_PLATFORM_API

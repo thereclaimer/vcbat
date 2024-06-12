@@ -8,7 +8,18 @@ vcbat_create_and_initialize(
 
     VCBat vcbat = {0};
 
-    vcbat.imgui = vcbat_imgui_create_and_initialize();
+    VCBAT_ASSERT(platform_api.memory_allocate);
+    VCBAT_ASSERT(platform_api.memory_free);
+    VCBAT_ASSERT(platform_api.file_size);
+    VCBAT_ASSERT(platform_api.file_open);
+    VCBAT_ASSERT(platform_api.file_close);
+    VCBAT_ASSERT(platform_api.file_write);
+    VCBAT_ASSERT(platform_api.file_read);
+
+    vcbat_platform_api = platform_api;
+
+    vcbat.imgui  = vcbat_imgui_create_and_initialize();
+    vcbat.memory = vcbat_memory_create_and_initialize();
 
     return(vcbat);
 }
