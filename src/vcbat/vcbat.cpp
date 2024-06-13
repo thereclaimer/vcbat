@@ -30,7 +30,6 @@ vcbat_update(
 
     b8 running = true;
 
-    vcbat_ref.imgui.show_demo_window = true;
     vcbat_ref.imgui.show_cl_options  = true;
     vcbat_ref.imgui.show_main_window = true;
 

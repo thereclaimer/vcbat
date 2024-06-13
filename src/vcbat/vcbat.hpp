@@ -12,16 +12,24 @@
 
 struct VCBatImGuiMenuBar {
     b8 menu_file_item_exit;
+    b8 menu_view_item_demo;
 };
 
 typedef VCBatImGuiMenuBar* VCBatImGuiMenuBarPtr;
 typedef VCBatImGuiMenuBar& VCBatImGuiMenuBarRef;
 
+struct VCBatImGuiDockNodes{
+    ImGuiID dock_group;
+    ImGuiID left_panel;
+    ImGuiID right_panel;
+};
+
 struct VCBatImGui {
-    b8                show_demo_window;
-    b8                show_cl_options;
-    b8                show_main_window;
-    VCBatImGuiMenuBar menu_bar;
+    b8                  show_demo_window;
+    b8                  show_cl_options;
+    b8                  show_main_window;
+    VCBatImGuiMenuBar   menu_bar;
+    VCBatImGuiDockNodes dock_nodes;
 };
 
 typedef VCBatImGui& VCBatImGuiRef;

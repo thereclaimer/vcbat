@@ -7,6 +7,21 @@ vcbat_imgui_create_and_initialize() {
     
     VCBatImGui vcbat_imgui = {0};
     
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+    //create our panels
+    ImVec2 viewport_work_pos  = viewport->WorkPos;
+    ImVec2 viewport_work_size = viewport->WorkSize; 
+    ImVec2 viewport_center    = viewport->GetCenter(); 
+
+    VCBatImGuiDockNodes dock_nodes = {0};
+
+    //https://gist.github.com/AidanSun05/953f1048ffe5699800d2c92b88c36d9f
+
+    // dock_nodes.dock_group = ImGui::GetID("dock_nodes");
+    // ImGui::DockBuilderAddNode(dock_nodes.dock_group);
+
+
     return(vcbat_imgui);
 };
 
@@ -103,6 +118,8 @@ vcbat_imgui_menu_bar(
         }
         if (ImGui::BeginMenu("View")) {
 
+            ImGui::MenuItem("Demo",NULL,&menu_bar_ref.menu_view_item_demo);
+
             ImGui::EndMenu();
         }
     
@@ -144,11 +161,16 @@ vcbat_imgui_update(
     ImGui::Begin("main window",&vcbat_imgui_ref.show_main_window,main_window_flags);
 
     vcbat_imgui_menu_bar(vcbat_imgui_ref.menu_bar);    
-    
+
+    vcbat_imgui_ref.show_demo_window = vcbat_imgui_ref.menu_bar.menu_view_item_demo;
+
     vcbat_imgui_cl_options(&vcbat_imgui_ref.show_cl_options);
+
+    if (vcbat_imgui_ref.show_demo_window) {
+        ImGui::ShowDemoWindow(&vcbat_imgui_ref.show_demo_window);
+    }
 
     ImGui::End();
 
-    ImGui::ShowDemoWindow(&vcbat_imgui_ref.show_demo_window);
 }
 
