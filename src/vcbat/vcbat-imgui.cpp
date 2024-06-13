@@ -74,26 +74,81 @@ vcbat_imgui_cl_options(
 
     ImGui::Begin("CL Options",open);
 
-    vcbat_imgui_cl_options_table("Optimization",   "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_OPTIMIZATION,   VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION,    VCBAT_CL_OPTIONS_COUNT_OPTIMIZATIONS);
-    vcbat_imgui_cl_options_table("CodeGeneration", "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_CODE_GENERATION,VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION, VCBAT_CL_OPTIONS_COUNT_CODE_GENERATION);
-    vcbat_imgui_cl_options_table("OutputFiles",    "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_OUTPUT_FILES,   VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES,    VCBAT_CL_OPTIONS_COUNT_OUTPUT_FILES);
-    vcbat_imgui_cl_options_table("Preprocessor",   "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_PREPROCESSOR,   VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR,    VCBAT_CL_OPTIONS_COUNT_PREPROCESSOR);
-    vcbat_imgui_cl_options_table("HeaderModules",  "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_HEADER_MODULES, VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES,  VCBAT_CL_OPTIONS_COUNT_HEADER_MODULES);
-    vcbat_imgui_cl_options_table("Language",       "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_LANGUAGE,       VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE,        VCBAT_CL_OPTIONS_COUNT_LANGUAGE);
-    vcbat_imgui_cl_options_table("Linking",        "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_LINKING,        VCBAT_CL_OPTIONS_DESCRIPTION_LINKING,         VCBAT_CL_OPTIONS_COUNT_LINKING);
-    vcbat_imgui_cl_options_table("Miscellaneous",  "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_MISCELLANEOUS,  VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS,   VCBAT_CL_OPTIONS_COUNT_MISCELLANEOUS);
-    vcbat_imgui_cl_options_table("Diagnostics",    "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_DIAGNOSTICS,    VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS,     VCBAT_CL_OPTIONS_COUNT_DIAGNOSTICS);
-    vcbat_imgui_cl_options_table("Experimental",   "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_EXPERIMENTAL,   VCBAT_CL_OPTIONS_DESCRIPTION_EXPERIMENTAL,    VCBAT_CL_OPTIONS_COUNT_EXPERIMENTAL);
-    vcbat_imgui_cl_options_table("Deprecated",     "cl_options_table_optimizations", VCBAT_CL_OPTIONS_FLAG_DEPRECATED,     VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED,      VCBAT_CL_OPTIONS_COUNT_DEPRECATED);
+    vcbat_imgui_cl_options_table("Optimization",    "cl_options_table_optimizations",  VCBAT_CL_OPTIONS_FLAG_OPTIMIZATION,   VCBAT_CL_OPTIONS_DESCRIPTION_OPTIMIZATION,    VCBAT_CL_OPTIONS_COUNT_OPTIMIZATIONS);
+    vcbat_imgui_cl_options_table("Code Generation", "cl_options_table_codegeneration", VCBAT_CL_OPTIONS_FLAG_CODE_GENERATION,VCBAT_CL_OPTIONS_DESCRIPTION_CODE_GENERATION, VCBAT_CL_OPTIONS_COUNT_CODE_GENERATION);
+    vcbat_imgui_cl_options_table("Output Files",    "cl_options_table_outputfiles",    VCBAT_CL_OPTIONS_FLAG_OUTPUT_FILES,   VCBAT_CL_OPTIONS_DESCRIPTION_OUTPUT_FILES,    VCBAT_CL_OPTIONS_COUNT_OUTPUT_FILES);
+    vcbat_imgui_cl_options_table("Preprocessor",    "cl_options_table_preprocessor",   VCBAT_CL_OPTIONS_FLAG_PREPROCESSOR,   VCBAT_CL_OPTIONS_DESCRIPTION_PREPROCESSOR,    VCBAT_CL_OPTIONS_COUNT_PREPROCESSOR);
+    vcbat_imgui_cl_options_table("Header Modules",  "cl_options_table_headermodules",  VCBAT_CL_OPTIONS_FLAG_HEADER_MODULES, VCBAT_CL_OPTIONS_DESCRIPTION_HEADER_MODULES,  VCBAT_CL_OPTIONS_COUNT_HEADER_MODULES);
+    vcbat_imgui_cl_options_table("Language",        "cl_options_table_language",       VCBAT_CL_OPTIONS_FLAG_LANGUAGE,       VCBAT_CL_OPTIONS_DESCRIPTION_LANGUAGE,        VCBAT_CL_OPTIONS_COUNT_LANGUAGE);
+    vcbat_imgui_cl_options_table("Linking",         "cl_options_table_linking",        VCBAT_CL_OPTIONS_FLAG_LINKING,        VCBAT_CL_OPTIONS_DESCRIPTION_LINKING,         VCBAT_CL_OPTIONS_COUNT_LINKING);
+    vcbat_imgui_cl_options_table("Miscellaneous",   "cl_options_table_miscellaneous",  VCBAT_CL_OPTIONS_FLAG_MISCELLANEOUS,  VCBAT_CL_OPTIONS_DESCRIPTION_MISCELLANEOUS,   VCBAT_CL_OPTIONS_COUNT_MISCELLANEOUS);
+    vcbat_imgui_cl_options_table("Diagnostics",     "cl_options_table_diagnostics",    VCBAT_CL_OPTIONS_FLAG_DIAGNOSTICS,    VCBAT_CL_OPTIONS_DESCRIPTION_DIAGNOSTICS,     VCBAT_CL_OPTIONS_COUNT_DIAGNOSTICS);
+    vcbat_imgui_cl_options_table("Experimental",    "cl_options_table_experimental",   VCBAT_CL_OPTIONS_FLAG_EXPERIMENTAL,   VCBAT_CL_OPTIONS_DESCRIPTION_EXPERIMENTAL,    VCBAT_CL_OPTIONS_COUNT_EXPERIMENTAL);
+    vcbat_imgui_cl_options_table("Deprecated",      "cl_options_table_deprecated",     VCBAT_CL_OPTIONS_FLAG_DEPRECATED,     VCBAT_CL_OPTIONS_DESCRIPTION_DEPRECATED,      VCBAT_CL_OPTIONS_COUNT_DEPRECATED);
 
     ImGui::End();
+}
+
+internal void
+vcbat_imgui_menu_bar(
+    VCBatImGuiMenuBarRef menu_bar_ref) {
+
+    if (ImGui::BeginMainMenuBar()) {
+
+        if (ImGui::BeginMenu("File")) {
+
+            ImGui::MenuItem("Exit",NULL,&menu_bar_ref.menu_file_item_exit);
+
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("View")) {
+
+            ImGui::EndMenu();
+        }
+    
+        ImGui::BeginMenuBar();
+    }
 }
 
 internal void
 vcbat_imgui_update(
     VCBatImGuiRef vcbat_imgui_ref) {
 
-    ImGui::ShowDemoWindow(&vcbat_imgui_ref.show_demo_window);
+    //first, make sure dockspace is enabled
+    const ImGuiViewport*      viewport        = ImGui::GetMainViewport();
+    static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+
+    ImGui::DockSpaceOverViewport(
+        viewport,
+        dockspace_flags);
+
+    //next, create the main window
+    ImGuiWindowFlags main_window_flags = 
+        ImGuiWindowFlags_MenuBar               | 
+        ImGuiWindowFlags_NoDocking             |
+        ImGuiWindowFlags_NoTitleBar            | 
+        ImGuiWindowFlags_NoCollapse            | 
+        ImGuiWindowFlags_NoResize              | 
+        ImGuiWindowFlags_NoMove                |
+        ImGuiWindowFlags_NoBringToFrontOnFocus | 
+        ImGuiWindowFlags_NoNavFocus            |
+        ImGuiWindowFlags_NoBackground;
+
+
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+    ImGui::Begin("main window",&vcbat_imgui_ref.show_main_window,main_window_flags);
+
+    vcbat_imgui_menu_bar(vcbat_imgui_ref.menu_bar);    
+    
     vcbat_imgui_cl_options(&vcbat_imgui_ref.show_cl_options);
+
+    ImGui::End();
+
+    ImGui::ShowDemoWindow(&vcbat_imgui_ref.show_demo_window);
 }
 

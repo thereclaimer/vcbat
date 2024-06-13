@@ -24,12 +24,19 @@ vcbat_create_and_initialize(
     return(vcbat);
 }
 
-internal void
+internal b8
 vcbat_update(
     VCBatRef vcbat_ref) {
 
+    b8 running = true;
+
     vcbat_ref.imgui.show_demo_window = true;
     vcbat_ref.imgui.show_cl_options  = true;
+    vcbat_ref.imgui.show_main_window = true;
 
     vcbat_imgui_update(vcbat_ref.imgui);
+
+    running &= !vcbat_ref.imgui.menu_bar.menu_file_item_exit;
+
+    return(running);
 }

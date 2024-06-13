@@ -10,9 +10,18 @@
 // IMGUI
 //-------------------------------------------------
 
+struct VCBatImGuiMenuBar {
+    b8 menu_file_item_exit;
+};
+
+typedef VCBatImGuiMenuBar* VCBatImGuiMenuBarPtr;
+typedef VCBatImGuiMenuBar& VCBatImGuiMenuBarRef;
+
 struct VCBatImGui {
-    b8 show_demo_window;
-    b8 show_cl_options;
+    b8                show_demo_window;
+    b8                show_cl_options;
+    b8                show_main_window;
+    VCBatImGuiMenuBar menu_bar;
 };
 
 typedef VCBatImGui& VCBatImGuiRef;
@@ -189,7 +198,7 @@ VCBat
 vcbat_create_and_initialize(
     VCBatPlatformApi platform_api);
 
-void
+b8
 vcbat_update(
     VCBatRef vcbat_ref);
 
