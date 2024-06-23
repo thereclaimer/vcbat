@@ -68,6 +68,15 @@ struct VCBatMemory {
     VCBatMemoryArenaPtr arenas_available;
 };
 
+struct VCBatMemoryInfo {
+    u64 arenas_total;
+    u64 arenas_reserved;
+    u64 arenas_available;
+    u64 platform_memory;
+    u64 platform_memory_available;
+    u64 platform_memory_used;
+};
+
 VCBatMemoryPtr
 vcbat_memory_create_and_initialize();
 
