@@ -32,4 +32,9 @@ vcbat_gui_menu_bar_render() {
     
         ImGui::BeginMenuBar();
     }
+
+    if (vcbat_gui_menu_bar.menu_view_item_demo) {
+        ImGui::ShowDemoWindow(&vcbat_gui_menu_bar.menu_view_item_demo);
+    }
+
 }

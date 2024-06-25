@@ -178,7 +178,7 @@ vcbat_win32_window_create(
             0,
             window_class.lpszClassName,
             L"VCBat", 
-            WS_OVERLAPPEDWINDOW | WS_MAXIMIZE,
+            WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT,
             CW_USEDEFAULT,
             VCBAT_WIN32_WINDOW_INITIAL_WIDTH, 

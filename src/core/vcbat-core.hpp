@@ -188,6 +188,20 @@ const char* VCBAT_BUILD_SCRIPT_STRING_DIAGNOSTICS     = "@set cl_diagnostics=";
 const char* VCBAT_BUILD_SCRIPT_STRING_EXPERIMENTAL    = "@set cl_experimental=";
 const char* VCBAT_BUILD_SCRIPT_STRING_DEPRECATED      = "@set cl_deprecated=";
 
+const char* VCBAT_BUILD_SCRIPT_STRING_CL_CALL = 
+"call cl.exe              ^\n"
+"    %cl_preprocessor%    ^\n"
+"    %cl_optimizations%   ^\n"
+"    %cl_code_generation% ^\n"
+"    %cl_output_files%    ^\n"
+"    %cl_header_modules%  ^\n"
+"    %cl_language%        ^\n"
+"    %cl_miscellaneous%   ^\n"
+"    %cl_diagnostics%     ^\n"
+"    %cl_experimental%    ^\n"
+"    %cl_deprecated%      ^\n"
+"    %cl_linking%         ^";
+
 struct VCBatBuildScriptArg {
     VCBatMemoryArenaHandle arena;
     VcBatClOption          cl_option;
@@ -235,6 +249,6 @@ VCBatBuildScriptPtr
 vcbat_build_script_create_and_initialize();
 
 const char*
-vcbat_build_script_build_script();
+vcbat_build_script_string();
 
 #endif //VCBAT_CORE_HPP

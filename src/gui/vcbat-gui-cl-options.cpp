@@ -2,9 +2,9 @@
 
 #include "vcbat-gui.hpp"
 
-global VCBatGuiClOptions vcbat_gui_cl_options;
+global VCBatGuiClOptionsWindow vcbat_gui_cl_options;
 
-internal VCBatGuiClOptionsPtr
+internal VCBatGuiClOptionsWindowPtr
 vcbat_gui_cl_options_create_and_initialize() {
 
     vcbat_gui_cl_options.table_flags =

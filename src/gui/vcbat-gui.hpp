@@ -18,9 +18,13 @@ struct  VCBatGuiBuildScriptWindow;
 typedef VCBatGuiBuildScriptWindow* VCBatGuiBuildScriptWindowPtr;
 typedef VCBatGuiBuildScriptWindow& VCBatGuiBuildScriptWindowRef;
 
-struct  VCBatGuiClOptions;
-typedef VCBatGuiClOptions* VCBatGuiClOptionsPtr;
-typedef VCBatGuiClOptions& VCBatGuiClOptionsRef;
+struct  VCBatGuiClOptionsWindow;
+typedef VCBatGuiClOptionsWindow* VCBatGuiClOptionsWindowPtr;
+typedef VCBatGuiClOptionsWindow& VCBatGuiClOptionsWindowRef;
+
+struct  VCBatGuiSourcesWindow;
+typedef VCBatGuiSourcesWindow* VCBatGuiSourcesWindowPtr;
+typedef VCBatGuiSourcesWindow& VCBatGuiSourcesWindowRef;
 
 //-------------------------------------------------
 // GUI
@@ -33,12 +37,24 @@ struct VCBatGuiFonts {
     ImFont* code;
 };
 
+struct VCBatGuiDockSpace {
+    ImGuiID dock_node_id;
+    ImGuiID control_node_id; 
+    ImGuiID options_node_id;
+    ImGuiID output_node_id;
+};
+
+struct VCBatGuiWindows {
+    VCBatGuiBuildScriptWindowPtr build_script;
+    VCBatGuiSourcesWindowPtr     sources;
+};
+
 struct VCBatGui {
     VCBatGuiFonts                fonts;
     VCBatGuiMenuBarPtr           menu_bar_ptr; 
-    VCBatGuiBuildScriptWindowPtr build_script_window_ptr;
-    VCBatGuiClOptionsPtr         cl_options_ptr;
     ImGuiWindowFlags             main_window_flags;
+    VCBatGuiDockSpace            dockspace;
+    VCBatGuiWindows              windows;
 };
 
 struct VCBatGuiTextSizePixels {
@@ -78,7 +94,7 @@ vcbat_gui_menu_bar_render();
 
 #define VCBAT_GUI_CL_OPTIONS_HEADER_OPTIMIZATION    "Optimization"
 #define VCBAT_GUI_CL_OPTIONS_HEADER_CODE_GENERATION "Code"
-#define VCBAT_GUI_CL_OPTIONS_HEADER_OUTPUT_FILES    "OutpuT"
+#define VCBAT_GUI_CL_OPTIONS_HEADER_OUTPUT_FILES    "Output"
 #define VCBAT_GUI_CL_OPTIONS_HEADER_PREPROCESSOR    "Preprocessor"
 #define VCBAT_GUI_CL_OPTIONS_HEADER_HEADER_MODULES  "Header"
 #define VCBAT_GUI_CL_OPTIONS_HEADER_LANGUAGE        "Language"
@@ -103,15 +119,47 @@ vcbat_gui_menu_bar_render();
 #define VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_FLAG        0
 #define VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_DESCRIPTION 1
 
-struct VCBatGuiClOptions {
+struct VCBatGuiClOptionsWindow {
     bool            enabled;
     ImGuiTableFlags table_flags;
 };
 
-VCBatGuiClOptionsPtr
+VCBatGuiClOptionsWindowPtr
 vcbat_gui_cl_options_create_and_initialize();
 
 void
 vcbat_gui_cl_options_render();
+
+//-------------------------------------------------
+// SCRIPT WINDOW
+//-------------------------------------------------
+
+#define VCBAT_GUI_BUILD_SCRIPT_WINDOW_TITLE "Build Script"
+
+struct VCBatGuiBuildScriptWindow {
+    ImGuiWindowFlags flags;
+};
+
+VCBatGuiBuildScriptWindowPtr
+vcbat_gui_build_script_window_create_and_initialize();
+
+void
+vcbat_gui_build_script_window_render();
+
+//-------------------------------------------------
+// SOURCES WINDOW 
+//-------------------------------------------------
+
+#define VCBAT_GUI_SOURCES_WINDOW_TITLE "Sources"
+
+struct VCBatGuiSourcesWindow {
+    ImGuiWindowFlags flags;
+};
+
+VCBatGuiSourcesWindowPtr
+vcbat_gui_sources_window_create_and_initialize();
+
+void
+vcbat_gui_sources_window_render();
 
 #endif //VCBAT_GUI_HPP

@@ -40,7 +40,5 @@ vcbat_update(
 
     vcbat_gui_render();
 
-    vcbat_build_script_build_script();
-
     return(running);
 }

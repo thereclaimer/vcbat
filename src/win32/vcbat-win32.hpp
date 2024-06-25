@@ -10,8 +10,8 @@
 
 #define vcbat_win32_main WINAPI wWinMain
 
-#define VCBAT_WIN32_WINDOW_INITIAL_WIDTH  1024
-#define VCBAT_WIN32_WINDOW_INITIAL_HEIGHT 768
+#define VCBAT_WIN32_WINDOW_INITIAL_WIDTH  1920
+#define VCBAT_WIN32_WINDOW_INITIAL_HEIGHT 1080
 
 //-------------------------------------------------
 // WINDOW

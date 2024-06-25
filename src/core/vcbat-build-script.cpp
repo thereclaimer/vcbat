@@ -27,7 +27,7 @@ vcbat_build_script_create_and_initialize() {
 }
 
 const char*
-vcbat_build_script_build_script() {
+vcbat_build_script_string() {
 
     vcbat_string_clear(vcbat_build_script.script_string);
 
@@ -44,16 +44,29 @@ vcbat_build_script_build_script() {
     const char* vcbat_build_script_variable_deprecated      = vcbat_string_cstr(vcbat_build_script.variables.deprecated);
 
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_optimization);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_code_generation);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_output_files);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_preprocessor);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_header_modules);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_language);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_linking);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_miscellaneous);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_diagnostics);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_experimental);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
     vcbat_string_append(vcbat_build_script.script_string, vcbat_build_script_variable_deprecated);
+    vcbat_string_append(vcbat_build_script.script_string, "\n\n");
+    vcbat_string_append(vcbat_build_script.script_string, VCBAT_BUILD_SCRIPT_STRING_CL_CALL);
+
 
     const char* script_string = vcbat_string_cstr(vcbat_build_script.script_string);
 

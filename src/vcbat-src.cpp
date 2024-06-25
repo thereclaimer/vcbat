@@ -14,6 +14,8 @@
 #include "vcbat.cpp"
 
 //gui
+#include "vcbat-gui-build-script.cpp"
 #include "vcbat-gui-cl-options.cpp"
 #include "vcbat-gui-menu-bar.cpp"
+#include "vcbat-gui-sources.cpp"
 #include "vcbat-gui.cpp"
