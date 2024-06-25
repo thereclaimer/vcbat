@@ -6,7 +6,7 @@
 #include <tchar.h>
 
 #include "vcbat.hpp"
-
+#include "vcbat-core.hpp"
 
 #define vcbat_win32_main WINAPI wWinMain
 

@@ -6,7 +6,6 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\bin\\VCBat.exe",
-            "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\bin",
             "environment": [],

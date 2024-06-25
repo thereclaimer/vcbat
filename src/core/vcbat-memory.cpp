@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vcbat-memory.hpp"
+#include "vcbat-core.hpp"
 
 global VCBatMemory vcbat_memory;
 
@@ -165,8 +165,8 @@ vcbat_memory_arena_bytes_push(
 
 internal void
 vcbat_memory_arena_bytes_pop(
-    VCBatMemoryArenaPtr arena,
-    u64                 size) {
+    VCBatMemoryArenaHandle arena,
+    u64                    size) {
 
     VCBatMemoryArenaPtr arena_ptr = (VCBatMemoryArenaPtr)arena; 
 

@@ -14,10 +14,8 @@
                       /I src\cl     ^
                       /I src\win32  ^
                       /I src\gui    ^
-                      /I src\vcbat  ^
+                      /I src\core  ^
                       /I src\common ^
-                      /I src\string ^
-                      /I src\memory ^
                       /I vcpkg_installed\x64-windows\include
 
 @set cl_source=       src\vcbat-src.cpp
