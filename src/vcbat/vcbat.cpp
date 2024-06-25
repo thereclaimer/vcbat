@@ -20,10 +20,14 @@ vcbat_create_and_initialize(
 
     vcbat.imgui      = vcbat_imgui_create_and_initialize();
     vcbat.memory_ptr = vcbat_memory_create_and_initialize();
+    vcbat.cl_ptr     = vcbat_cl_create_and_initialize();
 
     VCBatMemoryInfo memory_info = {0};
     vcbat_memory_info(memory_info);
 
+    VCBatStringHandle string_handle = vcbat_string_new("HELLO WORLD!!");    
+
+    const char* my_string = vcbat_string_cstr(string_handle);
 
     return(vcbat);
 }
@@ -40,6 +44,8 @@ vcbat_update(
     vcbat_imgui_update(vcbat_ref.imgui);
 
     running &= !vcbat_ref.imgui.menu_bar.menu_file_item_exit;
+
+    vcbat_cl_build_script();
 
     return(running);
 }

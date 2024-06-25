@@ -38,22 +38,35 @@ struct VCBatMemoryArena {
     VCBatMemoryArenaPtr previous;
 };
 
-VCBatMemoryArena
+VCBatMemoryArenaHandle
 vcbat_memory_arena_reserve();
 
 void
-vcbat_memory_arena_release();
+vcbat_memory_arena_release(
+    VCBatMemoryArenaHandle arena);
 
 memory
 vcbat_memory_arena_bytes_push(
-    u64 size);
+    VCBatMemoryArenaHandle arena,
+    u64                    size);
 
 void
 vcbat_memory_arena_bytes_pop(
-    u64 size);
+    VCBatMemoryArenaHandle arena,
+    u64                    size);
 
 void    
-vcbat_memory_arena_clear();
+vcbat_memory_arena_clear(
+    VCBatMemoryArenaHandle arena);
+
+u64
+vcbat_memory_arena_space_available(
+    VCBatMemoryArenaHandle arena);
+
+u64
+vcbat_memory_arena_space_used(
+    VCBatMemoryArenaHandle arena);
+    
 
 //-------------------------------------------------
 // MEMORY

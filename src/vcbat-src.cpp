@@ -11,3 +11,5 @@
 #include "vcbat.cpp"
 #include "vcbat-imgui.cpp"
 #include "vcbat-memory.cpp"
+#include "vcbat-string.cpp"
+#include "vcbat-cl.cpp"
