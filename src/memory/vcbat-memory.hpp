@@ -77,7 +77,15 @@ struct VCBatMemoryInfo {
     u64 platform_memory_used;
 };
 
+typedef VCBatMemoryInfo* VCBatMemoryInfoPtr;
+typedef VCBatMemoryInfo& VCBatMemoryInfoRef;
+
 VCBatMemoryPtr
 vcbat_memory_create_and_initialize();
+
+void
+vcbat_memory_info(
+    VCBatMemoryInfoRef memory_info_ref);
+
 
 #endif //VCBAT_MEMORY_HPP

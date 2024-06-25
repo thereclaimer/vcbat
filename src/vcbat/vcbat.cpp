@@ -21,6 +21,7 @@ vcbat_create_and_initialize(
     vcbat.imgui  = vcbat_imgui_create_and_initialize();
     vcbat.memory = vcbat_memory_create_and_initialize();
 
+
     return(vcbat);
 }
 

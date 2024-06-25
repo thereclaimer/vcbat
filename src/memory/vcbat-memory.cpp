@@ -46,3 +46,41 @@ vcbat_memory_create_and_initialize() {
 
     return(&vcbat_memory);
 }
+
+
+internal void
+vcbat_memory_info(
+    VCBatMemoryInfoRef memory_info_ref) {
+    
+    //get the available arenas
+    u64 arenas_available = 0;
+    u64 memory_available = vcbat_memory.platform_memory_size_bytes;
+    for (
+        VCBatMemoryArenaPtr arena = vcbat_memory.arenas_available;
+        arena != NULL && arena->next != NULL;
+        arena = arena->next) {
+
+        ++arenas_available;
+        memory_available -= (sizeof(VCBatMemoryArena) + arena->bytes_used);
+    }
+
+    //get the reserved arenas
+    u64 arenas_reserved = 0;
+    u64 memory_used     = 0;
+    for (
+        VCBatMemoryArenaPtr arena = vcbat_memory.arenas_reserved;
+        arena != NULL && arena->next != NULL;
+        arena = arena->next) {
+
+        ++arenas_reserved;
+        memory_used += (sizeof(VCBatMemoryArena) + arena->bytes_used);
+    }
+
+    //fill out the info
+    memory_info_ref.platform_memory           = vcbat_memory.platform_memory_size_bytes;
+    memory_info_ref.arenas_total              = vcbat_memory.arenas_count_total;
+    memory_info_ref.arenas_available          = arenas_available;
+    memory_info_ref.arenas_reserved           = arenas_reserved;
+    memory_info_ref.platform_memory_used      = memory_used;
+    memory_info_ref.platform_memory_available = memory_available;
+}
