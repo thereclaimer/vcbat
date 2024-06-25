@@ -25,6 +25,7 @@ typedef VCBatMemory& VCBatMemoryRef;
 struct  VCBatMemoryArena;
 typedef VCBatMemoryArena* VCBatMemoryArenaPtr;
 typedef VCBatMemoryArena& VCBatMemoryArenaRef;
+typedef handle            VCBatMemoryArenaHandle;
 
 //-------------------------------------------------
 // ARENA

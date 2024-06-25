@@ -7,7 +7,7 @@
 #include <imgui_impl_win32.h>
 
 
-#include <pugiconfig.hpp>
-#include <pugixml.hpp>
+// #include <pugiconfig.hpp>
+// #include <pugixml.hpp>
 
 #endif //VCBAT_DEPENDENCIES_HPP

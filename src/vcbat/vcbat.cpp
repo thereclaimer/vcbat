@@ -18,8 +18,11 @@ vcbat_create_and_initialize(
 
     vcbat_platform_api = platform_api;
 
-    vcbat.imgui  = vcbat_imgui_create_and_initialize();
-    vcbat.memory = vcbat_memory_create_and_initialize();
+    vcbat.imgui      = vcbat_imgui_create_and_initialize();
+    vcbat.memory_ptr = vcbat_memory_create_and_initialize();
+
+    VCBatMemoryInfo memory_info = {0};
+    vcbat_memory_info(memory_info);
 
 
     return(vcbat);
