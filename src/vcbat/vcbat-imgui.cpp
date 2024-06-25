@@ -9,6 +9,13 @@ vcbat_imgui_create_and_initialize() {
     
     ImGuiViewport* viewport = ImGui::GetMainViewport();
 
+    ImGuiIO& io = ImGui::GetIO();
+    ImFont* font_ui = 
+        io.Fonts->AddFontFromMemoryCompressedBase85TTF(
+            vcbat_ui_font_compressed_data_base85,
+            18.0f);
+    VCBAT_ASSERT(font_ui);
+
     //create our panels
     ImVec2 viewport_work_pos  = viewport->WorkPos;
     ImVec2 viewport_work_size = viewport->WorkSize; 

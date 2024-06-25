@@ -7,6 +7,7 @@
 #include "vcbat-memory.hpp"
 #include "vcbat-string.hpp"
 #include "vcbat-cl.hpp"
+#include "vcbat-font-ui.hpp"
 
 //-------------------------------------------------
 // IMGUI
