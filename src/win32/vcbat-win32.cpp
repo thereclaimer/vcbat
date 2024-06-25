@@ -26,7 +26,7 @@ vcbat_win32_main(
 
         running = vcbat_win32_window_update(&window);
 
-        running &= vcbat_update(vcbat);
+        vcbat_update(vcbat);
 
         vcbat_win32_window_render(&window);
     }

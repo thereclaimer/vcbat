@@ -14,6 +14,7 @@
                       /I src\cl     ^
                       /I src\win32  ^
                       /I src\gui    ^
+                      /I src\vcbat    ^
                       /I src\common ^
                       /I src\memory ^
                       /I vcpkg_installed\x64-windows\include
