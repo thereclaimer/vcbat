@@ -14,6 +14,7 @@ vcbat_win32_imgui_initialize(
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     ImGui::StyleColorsDark();
 
