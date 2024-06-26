@@ -9,7 +9,7 @@ vcbat_win32_main(
     PWSTR     cmd_line, 
     s32       cmd_show) {
 
-    VCBatWin32Window window = 
+    VCBatWin32WindowPtr window = 
         vcbat_win32_window_create(
             instance,
             cmd_show);
@@ -22,13 +22,13 @@ vcbat_win32_main(
 
     b8 running = true;
 
-    while(running && !window.quit) {
+    while(running && !window->quit) {
 
-        running = vcbat_win32_window_update(&window);
+        vcbat_win32_window_update();
 
         vcbat_update(vcbat);
 
-        vcbat_win32_window_render(&window);
+        vcbat_win32_window_render();
     }
 
     return(0);

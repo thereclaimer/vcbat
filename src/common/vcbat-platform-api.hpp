@@ -55,6 +55,17 @@ typedef void
     b8     terminate
 );
 
+#define VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH 256
+
+struct VCBatPlatformFileDialogOptions {
+    const char* starting_directory;
+          char  selected_path[VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH]; 
+};
+
+typedef void
+(*func_vcbat_platform_file_dialog)(
+    VCBatPlatformFileDialogOptions& options);
+
 struct VCBatPlatformApi {
     func_vcbat_platform_memory_allocate memory_allocate;
     func_vcbat_platform_memory_free     memory_free;
@@ -63,6 +74,7 @@ struct VCBatPlatformApi {
     func_vcbat_platform_file_close      file_close;
     func_vcbat_platform_file_write      file_write;
     func_vcbat_platform_file_read       file_read;
+    func_vcbat_platform_file_dialog     file_dialog;
 };
 
 global VCBatPlatformApi vcbat_platform_api;
@@ -74,5 +86,6 @@ global VCBatPlatformApi vcbat_platform_api;
 #define vcbat_platform_api_file_close      vcbat_platform_api.file_close
 #define vcbat_platform_api_file_write      vcbat_platform_api.file_write
 #define vcbat_platform_api_file_read       vcbat_platform_api.file_read
+#define vcbat_platform_api_file_dialog     vcbat_platform_api.file_dialog
 
 #endif //VCBAT_PLATFORM_API

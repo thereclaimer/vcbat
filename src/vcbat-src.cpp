@@ -7,15 +7,18 @@
 #include "vcbat-win32-imgui.cpp"
 #include "vcbat-win32-platform-api.cpp"
 
-//vcbat
-#include "vcbat-memory.cpp"
+//core
 #include "vcbat-string.cpp"
 #include "vcbat-build-script.cpp"
 #include "vcbat.cpp"
 
+//memory
+#include "vcbat-memory.cpp"
+
 //gui
 #include "vcbat-gui-build-script.cpp"
+#include "vcbat-gui-build-settings.cpp"
 #include "vcbat-gui-cl-options.cpp"
+#include "vcbat-gui-file-list.cpp"
 #include "vcbat-gui-menu-bar.cpp"
-#include "vcbat-gui-sources.cpp"
 #include "vcbat-gui.cpp"

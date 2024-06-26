@@ -2,101 +2,62 @@
 
 #include "vcbat-win32.hpp"
 
-#define WM_VCBAT_WINDOW (WM_USER+1)
+global VCBatWin32Window vcbat_win32_window;
 
-internal b8
-vcbat_win32_window_process_events(
-    VCBatWin32WindowPtr window) {
+internal void
+vcbat_win32_window_process_events() {
 
-    PostMessage(
-        window->handle_window,
-        WM_VCBAT_WINDOW,
-        0,
-        (LPARAM)window);
-
-    while (PeekMessage(&window->message, 0,0,0, PM_REMOVE)) {
-
-        switch(window->message.message) {
-
-            case WM_CLOSE:
-            case WM_QUIT:
-            case WM_DESTROY: {
-                return(false);
-            } break;
-
-            default: {
-                TranslateMessage(&window->message);
-                DispatchMessage(&window->message);
-            } break;
-        }
+    while (PeekMessage(&vcbat_win32_window.message, 0,0,0, PM_REMOVE)) {
+        TranslateMessage(&vcbat_win32_window.message);
+        DispatchMessage(&vcbat_win32_window.message);
     }
-
-    return(true);
 }
 
-internal b8
-vcbat_win32_window_update(
-    VCBatWin32WindowPtr window) {
-
-    VCBAT_ASSERT(window);
+internal void
+vcbat_win32_window_update() {
 
     //process window events
-    b8 result = vcbat_win32_window_process_events(window);
-    if (!result) {
-        return(false);
-    }
+    vcbat_win32_window_process_events();
 
     //start new imgui frame
     vcbat_win32_imgui_frame_start();
-
-    return(true);
 }
 
-internal b8
-vcbat_win32_window_render(
-    VCBatWin32WindowPtr window) {
+internal void
+vcbat_win32_window_render() {
 
     //render opengl
     vcbat_win32_opengl_render(
-        window->window_width,
-        window->window_height);
+        vcbat_win32_window.window_width,
+        vcbat_win32_window.window_height);
 
     //render the imgui frame
     vcbat_win32_imgui_frame_render();
 
     //swap buffers
-    SwapBuffers(window->handle_device_context);
-
-    return(true);
-
+    SwapBuffers(
+        vcbat_win32_window.handle_device_context);
 }
 
-
-internal bool
+internal LRESULT
 vcbat_win32_window_on_wm_size(
-    VCBatWin32WindowPtr win32_window_ptr) {
+    WPARAM w_param,
+    LPARAM l_param) {
 
-    if (!win32_window_ptr) {
-        return(true);
-    }
+    vcbat_win32_window.window_width  = LOWORD(l_param);
+    vcbat_win32_window.window_height = HIWORD(w_param);
 
-    win32_window_ptr->window_width  = LOWORD(win32_window_ptr->message_param_l);
-    win32_window_ptr->window_height = HIWORD(win32_window_ptr->message_param_l);
-
-    return(true);
+    return(0);
 }
 
-internal bool
+internal LRESULT
 vcbat_win32_window_on_wm_quit(
-    VCBatWin32WindowPtr win32_window_ptr) {
+    WPARAM w_param,
+    LPARAM l_param) {
 
-    if (!win32_window_ptr) {
-        return(true);
-    }
-
-    win32_window_ptr->quit = true; 
-
-    return(true);
+    vcbat_win32_window.quit = true;
+    
+    return(0);
 }
 
 internal LRESULT CALLBACK 
@@ -117,50 +78,50 @@ vcbat_win32_window_callback(
         return(true);
     }
 
-    local VCBatWin32WindowPtr win32_window_ptr = NULL;
-
-    if (win32_window_ptr) {
-        win32_window_ptr->message_param_w = w_param;
-        win32_window_ptr->message_param_l = l_param;
-    }
-
-    b8 result = true;
+    func_vcbat_win32_on_wm_message wm_message_handler;
 
     switch (message) {
 
-        case WM_VCBAT_WINDOW: {
-            win32_window_ptr = (VCBatWin32WindowPtr)l_param;
-        } break;
-
         case WM_SIZE: {
-            result = vcbat_win32_window_on_wm_size(win32_window_ptr);
+            wm_message_handler = vcbat_win32_window_on_wm_size;
         } break;
 
         case WM_CLOSE:
         case WM_QUIT:
         case WM_DESTROY: {
-            result = vcbat_win32_window_on_wm_quit(win32_window_ptr);
+            wm_message_handler = vcbat_win32_window_on_wm_quit;
         } break;
 
         default: {
-            result = 
+
+            LRESULT def_result = 
                 DefWindowProc(
                     window_handle,
                     message,
                     w_param,
                     l_param);
+
+            return(def_result);
+
         } break;
     }
+
+    VCBAT_ASSERT(wm_message_handler);
+
+    LRESULT result = 
+        wm_message_handler(
+            w_param,
+            l_param);
 
     return(result);
 }
 
-internal VCBatWin32Window
+internal VCBatWin32WindowPtr
 vcbat_win32_window_create(
     HINSTANCE instance,
     s32       cmd_show) {
 
-    VCBatWin32Window window = {0};
+    vcbat_win32_window = {0};
 
     //define window class
     WNDCLASS window_class = {0};
@@ -208,12 +169,18 @@ vcbat_win32_window_create(
         window_handle,
         cmd_show);
 
-    window.window_width          = VCBAT_WIN32_WINDOW_INITIAL_WIDTH;
-    window.window_height         = VCBAT_WIN32_WINDOW_INITIAL_HEIGHT;
-    window.handle_window         = window_handle;
-    window.handle_device_context = device_context_handle;
-    window.handle_opengl         = opengl_handle;
-    window.quit                  = false;
+    vcbat_win32_window.window_width          = VCBAT_WIN32_WINDOW_INITIAL_WIDTH;
+    vcbat_win32_window.window_height         = VCBAT_WIN32_WINDOW_INITIAL_HEIGHT;
+    vcbat_win32_window.handle_window         = window_handle;
+    vcbat_win32_window.handle_device_context = device_context_handle;
+    vcbat_win32_window.handle_opengl         = opengl_handle;
+    vcbat_win32_window.quit                  = false;
 
-    return(window);
+    return(&vcbat_win32_window);
+}
+
+
+internal const VCBatWin32WindowRef 
+vcbat_win32_window_get() {
+    return(vcbat_win32_window);
 }

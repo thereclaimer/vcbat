@@ -15,19 +15,13 @@ vcbat_create_and_initialize(
     VCBAT_ASSERT(platform_api.file_close);
     VCBAT_ASSERT(platform_api.file_write);
     VCBAT_ASSERT(platform_api.file_read);
+    VCBAT_ASSERT(platform_api.file_dialog);
 
     vcbat_platform_api = platform_api;
 
-    vcbat.gui_ptr           = vcbat_gui_create_and_initialize();
-    vcbat.memory_ptr        = vcbat_memory_create_and_initialize();
-    vcbat.build_script_ptr  = vcbat_build_script_create_and_initialize();
-
-    VCBatMemoryInfo memory_info = {0};
-    vcbat_memory_info(memory_info);
-
-    VCBatStringHandle string_handle = vcbat_string_new("HELLO WORLD!!");    
-
-    const char* my_string = vcbat_string_cstr(string_handle);
+    vcbat.gui_ptr          = vcbat_gui_create_and_initialize();
+    vcbat.memory_ptr       = vcbat_memory_create_and_initialize();
+    vcbat.build_script_ptr = vcbat_build_script_create_and_initialize();
 
     return(vcbat);
 }

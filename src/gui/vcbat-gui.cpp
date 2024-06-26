@@ -17,7 +17,6 @@ vcbat_gui_main_window_config() {
         ImGuiWindowFlags_NoBringToFrontOnFocus |
         ImGuiWindowFlags_NoNavFocus            |
         ImGuiWindowFlags_NoBackground;
-
 }
 
 internal void
@@ -35,6 +34,15 @@ vcbat_gui_fonts_load_all() {
     vcbat_gui.fonts.ui = font_ui;
 }
 
+internal void
+vcbat_gui_windows_load_all() {
+
+    VCBatGuiWindows& windows = vcbat_gui.windows;
+    windows.build_script   = vcbat_gui_build_script_window_create_and_initialize();
+    windows.build_settings = vcbat_gui_build_settings_window_create_and_initialize();
+    windows.cl_options     = vcbat_gui_cl_options_create_and_initialize();
+
+}
 
 internal VCBatGuiPtr
 vcbat_gui_create_and_initialize() {
@@ -74,10 +82,10 @@ ImGuiDockNodeFlags dock_node_flags =
         vcbat_gui.dockspace.control_node_id = ImGui::DockBuilderSplitNode(vcbat_gui.dockspace.output_node_id,  ImGuiDir_Left, 0.5f, NULL, &vcbat_gui.dockspace.output_node_id);
         vcbat_gui.dockspace.options_node_id = ImGui::DockBuilderSplitNode(vcbat_gui.dockspace.control_node_id, ImGuiDir_Down, 0.5f, NULL, &vcbat_gui.dockspace.control_node_id);
 
-        ImGui::DockBuilderDockWindow(VCBAT_GUI_BUILD_SCRIPT_WINDOW_TITLE, vcbat_gui.dockspace.output_node_id);
-        ImGui::DockBuilderDockWindow("Dear ImGui Demo", vcbat_gui.dockspace.output_node_id);
-        ImGui::DockBuilderDockWindow(VCBAT_GUI_SOURCES_WINDOW_TITLE,      vcbat_gui.dockspace.control_node_id);
-        ImGui::DockBuilderDockWindow(VCBAT_GUI_CL_OPTIONS_TITLE,          vcbat_gui.dockspace.options_node_id);
+        ImGui::DockBuilderDockWindow(VCBAT_GUI_BUILD_SCRIPT_WINDOW_TITLE,   vcbat_gui.dockspace.output_node_id);
+        ImGui::DockBuilderDockWindow(VCBAT_GUI_DEMO,                        vcbat_gui.dockspace.output_node_id);
+        ImGui::DockBuilderDockWindow(VCBAT_GUI_BUILD_SETTINGS_WINDOW_TITLE, vcbat_gui.dockspace.control_node_id);
+        ImGui::DockBuilderDockWindow(VCBAT_GUI_CL_OPTIONS_TITLE,            vcbat_gui.dockspace.options_node_id);
 
         ImGui::DockBuilderFinish(vcbat_gui.dockspace.dock_node_id);
 
@@ -107,8 +115,8 @@ vcbat_gui_render() {
     vcbat_gui_dockspace();
 
     vcbat_gui_cl_options_render();
-    vcbat_gui_sources_window_render();
     vcbat_gui_build_script_window_render();
+    vcbat_gui_build_settings_window_render();
 
     //main window end
     ImGui::End();
@@ -124,4 +132,15 @@ vcbat_gui_text_size_pixels() {
     text_size.height = ImGui::GetTextLineHeightWithSpacing();
 
     return(text_size);
+}
+
+internal u32
+vcbat_gui_text_width_pixels(
+    const char* text) {
+
+    u32 char_width_pixels = ImGui::CalcTextSize("A").x;
+    u32 text_length       = strlen(text);
+    u32 text_width_pixels = char_width_pixels * text_length;  
+
+    return(text_width_pixels);
 }

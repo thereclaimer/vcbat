@@ -35,18 +35,24 @@ struct VCBatWin32Window {
 typedef VCBatWin32Window* VCBatWin32WindowPtr;
 typedef VCBatWin32Window& VCBatWin32WindowRef;
 
-VCBatWin32Window
+VCBatWin32WindowPtr
 vcbat_win32_window_create(
     HINSTANCE instance,
     s32       cmd_show);
 
-b8 
-vcbat_win32_window_update(
-    VCBatWin32WindowPtr window);
+void 
+vcbat_win32_window_update();
 
-b8
-vcbat_win32_window_render(
-    VCBatWin32WindowPtr window);
+void
+vcbat_win32_window_render();
+
+const VCBatWin32WindowRef 
+vcbat_win32_window_get();
+
+typedef LRESULT
+(*func_vcbat_win32_on_wm_message)(
+    WPARAM w_param,
+    LPARAM l_param);
 
 //-------------------------------------------------
 // PLATFORM API
@@ -92,6 +98,10 @@ vcbat_win32_platform_api_file_write(
     u64    allocated_buffer_size,
     u64    offset,
     memory allocated_buffer);
+
+void
+vcbat_win32_platform_api_file_dialog(
+    VCBatPlatformFileDialogOptions& options);
 
 //-------------------------------------------------
 // OPENGL

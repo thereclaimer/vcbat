@@ -14,7 +14,8 @@
                       /I src\cl     ^
                       /I src\win32  ^
                       /I src\gui    ^
-                      /I src\core  ^
+                      /I src\memory ^
+                      /I src\core   ^
                       /I src\common ^
                       /I vcpkg_installed\x64-windows\include
 

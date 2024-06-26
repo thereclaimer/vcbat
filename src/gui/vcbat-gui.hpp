@@ -5,6 +5,7 @@
 #include "vcbat-font-ui.hpp"
 #include "vcbat-dependencies.hpp"
 #include "vcbat-cl-options.hpp"
+#include "vcbat-core.hpp"
 
 struct  VCBatGui;
 typedef VCBatGui* VCBatGuiPtr;
@@ -26,11 +27,20 @@ struct  VCBatGuiSourcesWindow;
 typedef VCBatGuiSourcesWindow* VCBatGuiSourcesWindowPtr;
 typedef VCBatGuiSourcesWindow& VCBatGuiSourcesWindowRef;
 
+struct  VCBatGuiBuildSettingsWindow;
+typedef VCBatGuiBuildSettingsWindow* VCBatGuiBuildSettingsWindowPtr;
+typedef VCBatGuiBuildSettingsWindow& VCBatGuiBuildSettingsWindowRef;
+
+struct  VCBatGuiFileList;
+typedef VCBatGuiFileList* VCBatGuiFileListPtr;
+typedef VCBatGuiFileList& VCBatGuiFileListRef;
+
 //-------------------------------------------------
 // GUI
 //-------------------------------------------------
 
 #define VCBAT_GUI_MAIN_WINDOW_TITLE "Main Window"
+#define VCBAT_GUI_DEMO              "Dear ImGui Demo"
 
 struct VCBatGuiFonts {
     ImFont* ui;
@@ -45,8 +55,9 @@ struct VCBatGuiDockSpace {
 };
 
 struct VCBatGuiWindows {
-    VCBatGuiBuildScriptWindowPtr build_script;
-    VCBatGuiSourcesWindowPtr     sources;
+    VCBatGuiBuildScriptWindowPtr   build_script;
+    VCBatGuiBuildSettingsWindowPtr build_settings;
+    VCBatGuiClOptionsWindowPtr     cl_options;
 };
 
 struct VCBatGui {
@@ -70,6 +81,10 @@ vcbat_gui_render();
 
 VCBatGuiTextSizePixels
 vcbat_gui_text_size_pixels();
+
+u32
+vcbat_gui_text_width_pixels(
+    const char* text);
 
 //-------------------------------------------------
 // MENU BAR
@@ -147,19 +162,85 @@ void
 vcbat_gui_build_script_window_render();
 
 //-------------------------------------------------
-// SOURCES WINDOW 
+// FILE LIST 
 //-------------------------------------------------
 
-#define VCBAT_GUI_SOURCES_WINDOW_TITLE "Sources"
+#define VCBAT_GUI_FILE_PATH_SIZE 256
 
-struct VCBatGuiSourcesWindow {
-    ImGuiWindowFlags flags;
+struct VCBatGuiFileList {
+    VCBatMemoryArenaHandle arena;
+    memory                 memory;
+    u32                    count;
+    u32                    index;
+    const char*            name;
 };
 
-VCBatGuiSourcesWindowPtr
-vcbat_gui_sources_window_create_and_initialize();
+VCBatGuiFileList
+vcbat_gui_file_list_create(
+    const char* file_list_name);
 
 void
-vcbat_gui_sources_window_render();
+vcbat_gui_file_list_reset(
+    VCBatGuiFileListRef file_list);
+
+void
+vcbat_gui_file_list_add(
+          VCBatGuiFileListRef file_list_ref,
+    const char*               file_path);
+
+void
+vcbat_gui_file_list_remove(
+    VCBatGuiFileListRef file_list_ref,
+    u32                 file_path_index);
+
+void
+vcbat_gui_file_list_update(
+          VCBatGuiFileListRef file_list_ref,
+    const u32                 file_path_index,
+    const char*               file_path_new);
+
+const char*
+vcbat_gui_file_list_cstr(
+    VCBatGuiFileListRef file_list_ref,
+    u32                 index);
+
+const char*
+vcbat_gui_file_list_cstr_begin(
+    VCBatGuiFileListRef file_list_ref);
+
+const char*
+vcbat_gui_file_list_cstr_next(
+    VCBatGuiFileListRef file_list_ref);
+
+//-------------------------------------------------
+// BUILD SETTINGS WINDOW 
+//-------------------------------------------------
+
+#define VCBAT_GUI_BUILD_SETTINGS_WINDOW_TITLE          "Build Settings"
+#define VCBAT_GUI_BUILD_SETTINGS_DIRECTORY_STRING_SIZE 256
+
+struct VCBatGuiBuildSettingsDirectories {
+    char working[VCBAT_GUI_BUILD_SETTINGS_DIRECTORY_STRING_SIZE];
+    char output[VCBAT_GUI_BUILD_SETTINGS_DIRECTORY_STRING_SIZE];
+};
+
+struct VCBatGuiBuildSettingsPathLists {
+    VCBatGuiFileList source_files;
+    VCBatGuiFileList include_directories;
+    VCBatGuiFileList lib_directories;
+    VCBatGuiFileList lib_files;
+};
+
+struct VCBatGuiBuildSettingsWindow {
+    ImGuiWindowFlags                 flags;
+    VCBatGuiBuildSettingsDirectories directories;  
+    VCBatGuiBuildSettingsPathLists   path_lists;
+};
+
+VCBatGuiBuildSettingsWindowPtr
+vcbat_gui_build_settings_window_create_and_initialize();
+
+void
+vcbat_gui_build_settings_window_render();
 
 #endif //VCBAT_GUI_HPP

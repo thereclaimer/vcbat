@@ -14,7 +14,8 @@ vcbat_win32_platform_api_create_and_init() {
     platform_api.file_close      = vcbat_win32_platform_api_file_close;
     platform_api.file_read       = vcbat_win32_platform_api_file_read;
     platform_api.file_write      = vcbat_win32_platform_api_file_write;
-
+    platform_api.file_dialog     = vcbat_win32_platform_api_file_dialog;
+    
     return(platform_api);
 }
 
@@ -162,4 +163,10 @@ internal void
 vcbat_win32_platform_api_free_memory(handle memory, u64 size) {
 
     VirtualFree(memory,size,MEM_RELEASE);
+}
+
+internal void
+vcbat_win32_platform_api_file_dialog(
+    VCBatPlatformFileDialogOptions& options) {
+
 }
