@@ -27,7 +27,10 @@
 @set cl_libs=         user32.lib   ^
                       opengl32.lib ^
                       gdi32.lib    ^
-                      imgui.lib
+                      imgui.lib    ^
+                      Comdlg32.lib ^
+                      shell32.lib ^
+                      Ole32.lib
 
 call cl.exe           ^
     %cl_preprocessor% ^

@@ -57,9 +57,17 @@ typedef void
 
 #define VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH 256
 
+enum VCBatPlatformFileDialogType_ {
+     VCBatPlatformFileDialogType_File      = 0,
+     VCBatPlatformFileDialogType_Directory = 1
+};
+
+typedef u32 VCBatPlatformFileDialogType; 
+
 struct VCBatPlatformFileDialogOptions {
-    const char* starting_directory;
-          char  selected_path[VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH]; 
+    VCBatPlatformFileDialogType dialog_type;
+    char*                       starting_directory;
+    char                        selected_path[VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH]; 
 };
 
 typedef void

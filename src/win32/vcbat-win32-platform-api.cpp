@@ -165,8 +165,72 @@ vcbat_win32_platform_api_free_memory(handle memory, u64 size) {
     VirtualFree(memory,size,MEM_RELEASE);
 }
 
+internal int CALLBACK
+vcbat_win32_platform_api_browse_dialog_callback(
+    HWND   hwnd, 
+    UINT   msg, 
+    LPARAM l_param, 
+    LPARAM l_data) {
+
+    if (msg == BFFM_INITIALIZED) {
+        SendMessage(
+            hwnd, 
+            BFFM_SETSELECTION, 
+            TRUE, 
+            l_data);
+    }
+
+    return(0);
+}
+
 internal void
 vcbat_win32_platform_api_file_dialog(
     VCBatPlatformFileDialogOptions& options) {
 
+    VCBatWin32WindowRef win32_window_ref = vcbat_win32_window_get();
+    switch(options.dialog_type) {
+        
+        case VCBatPlatformFileDialogType_File: {
+
+            OPENFILENAMEA open_file_name = {0};
+            open_file_name.lStructSize     = sizeof(OPENFILENAME);
+            open_file_name.hwndOwner       = win32_window_ref.handle_window;
+            open_file_name.lpstrFile       = options.selected_path;
+            open_file_name.lpstrFile[0]    = '\0';
+            open_file_name.nMaxFile        = VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH;
+            open_file_name.lpstrFilter     = "All\0*.*\0Text\0*.TXT\0";
+            open_file_name.nFilterIndex    = 1;
+            open_file_name.lpstrFileTitle  = NULL;
+            open_file_name.nMaxFileTitle   = 0;
+            open_file_name.lpstrInitialDir = NULL;
+            open_file_name.Flags           = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+            bool path_selected = GetOpenFileNameA(&open_file_name);
+            if (path_selected) {
+                
+            }
+
+        } break;
+
+        case VCBatPlatformFileDialogType_Directory: {
+
+            BROWSEINFOA browse_info = {0};
+            browse_info.ulFlags     = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+            browse_info.lpszTitle   = "Select a folder";
+            browse_info.lpfn        = vcbat_win32_platform_api_browse_dialog_callback;
+            browse_info.lParam      = (LPARAM)options.selected_path;
+
+            LPITEMIDLIST item_list = SHBrowseForFolderA(&browse_info);
+            if (item_list) {
+
+                SHGetPathFromIDListA(item_list, options.selected_path);
+                CoTaskMemFree(item_list);
+            }
+
+        } break;
+    }
+
+
+
+    
 }

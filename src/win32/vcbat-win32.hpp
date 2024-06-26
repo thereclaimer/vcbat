@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <GL/GL.h>
 #include <tchar.h>
+#include <shlobj_core.h> 
 
 #include "vcbat.hpp"
 #include "vcbat-core.hpp"

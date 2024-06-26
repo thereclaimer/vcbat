@@ -33,7 +33,19 @@ vcbat_gui_build_settings_directories() {
     // rendering UI elements except "Label Position -> Left/Right". Apparently thats in the 'too goddamn hard' box"
 
     //working directory
-    ImGui::Button("Browse");
+    if (ImGui::Button("Browse")) {
+
+        VCBatPlatformFileDialogOptions dialog_options;
+        dialog_options.dialog_type = VCBatPlatformFileDialogType_Directory;
+
+        vcbat_platform_api_file_dialog(dialog_options);
+        
+        strcpy(
+            directories.working,
+            dialog_options.selected_path);
+    }
+
+
     ImGui::SameLine();
     ImGui::InputText("Working Directory", directories.working, VCBAT_GUI_BUILD_SETTINGS_DIRECTORY_STRING_SIZE);
 
