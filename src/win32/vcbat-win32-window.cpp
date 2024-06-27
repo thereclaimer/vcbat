@@ -150,6 +150,26 @@ vcbat_win32_window_create(
             NULL);
     VCBAT_ASSERT(window_handle);
 
+    //center the window
+    RECT screen_rect;
+    SystemParametersInfo(SPI_GETWORKAREA,0,&screen_rect,0);
+    u32 screen_width  = screen_rect.right  - screen_rect.left; 
+    u32 screen_height = screen_rect.bottom - screen_rect.top; 
+
+    RECT window_rect;
+    GetWindowRect(window_handle,&window_rect);
+    int center_x = (screen_width  - VCBAT_WIN32_WINDOW_INITIAL_WIDTH)  / 2;
+    int center_y = (screen_height - VCBAT_WIN32_WINDOW_INITIAL_HEIGHT) / 2;
+
+    SetWindowPos(
+        window_handle,
+        HWND_TOP,
+        center_x,
+        center_y ,
+        0,
+        0,
+        SWP_NOSIZE | SWP_NOZORDER);
+
     //get the device context
     HDC device_context_handle = GetDC(window_handle);
     VCBAT_ASSERT(device_context_handle);
