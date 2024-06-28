@@ -19,9 +19,9 @@ vcbat_create_and_initialize(
 
     vcbat_platform_api = platform_api;
 
-    vcbat.gui_ptr          = vcbat_gui_create_and_initialize();
     vcbat.memory_ptr       = vcbat_memory_create_and_initialize();
     vcbat.build_script_ptr = vcbat_build_script_create_and_initialize();
+    vcbat.gui_ptr          = vcbat_gui_create_and_initialize();
 
     return(vcbat);
 }

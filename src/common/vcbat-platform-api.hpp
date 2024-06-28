@@ -67,7 +67,8 @@ typedef u32 VCBatPlatformFileDialogType;
 struct VCBatPlatformFileDialogOptions {
     VCBatPlatformFileDialogType dialog_type;
     char*                       starting_directory;
-    char                        selected_path[VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH]; 
+    char                        selected_path[VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH];
+    bool                        user_made_selection;
 };
 
 typedef void

@@ -212,6 +212,10 @@ const char*
 vcbat_gui_file_list_cstr_next(
     VCBatGuiFileListRef file_list_ref);
 
+void
+vbat_gui_file_list_render(
+    VCBatGuiFileListRef file_list_ref);
+
 //-------------------------------------------------
 // BUILD SETTINGS WINDOW 
 //-------------------------------------------------

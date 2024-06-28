@@ -170,6 +170,10 @@ vcbat_win32_window_create(
         0,
         SWP_NOSIZE | SWP_NOZORDER);
 
+    //initialize COM
+    HRESULT result = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+    VCBAT_ASSERT(result == S_OK);
+
     //get the device context
     HDC device_context_handle = GetDC(window_handle);
     VCBAT_ASSERT(device_context_handle);

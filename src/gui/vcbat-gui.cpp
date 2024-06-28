@@ -55,6 +55,8 @@ vcbat_gui_create_and_initialize() {
     vcbat_gui.menu_bar_ptr = vcbat_gui_menu_bar_create_and_initialize();
     VCBAT_ASSERT(vcbat_gui.menu_bar_ptr);
 
+    vcbat_gui_windows_load_all();
+
     return(&vcbat_gui);
 }
 

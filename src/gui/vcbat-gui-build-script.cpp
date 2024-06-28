@@ -7,8 +7,7 @@
 global VCBatGuiBuildScriptWindow vcbat_gui_build_script_window;
 
 internal VCBatGuiBuildScriptWindowPtr
-vcbat_gui_build_script_window_create_and_initialize(
-    ImGuiID dock_node_id) {
+vcbat_gui_build_script_window_create_and_initialize() {
 
     vcbat_gui_build_script_window = {0};
 

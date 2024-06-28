@@ -35,34 +35,31 @@ vcbat_imgui_cl_options_table(
 
     if (ImGui::CollapsingHeader(header_display_title)) {
 
-        ImGui::BeginTable(
-            table_name,
-            2,
-            vcbat_gui_cl_options.table_flags,
-            outer_size);
+        if (ImGui::BeginTable(table_name,2,vcbat_gui_cl_options.table_flags,outer_size)) {
 
-        ImGui::TableSetupScrollFreeze(0, 1); // Make top row always visible
-        ImGui::TableSetupColumn("Flag",        ImGuiTableColumnFlags_None);
-        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_None);
-        ImGui::TableHeadersRow();
+            ImGui::TableSetupScrollFreeze(0, 1); // Make top row always visible
+            ImGui::TableSetupColumn("Flag",        ImGuiTableColumnFlags_None);
+            ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_None);
+            ImGui::TableHeadersRow();
 
-        for (
-            u32 row = 0;
-            row < rows_count;
-            ++row) {
+            for (
+                u32 row = 0;
+                row < rows_count;
+                ++row) {
 
-            ImGui::TableNextRow();
+                ImGui::TableNextRow();
 
-            //flag
-            ImGui::TableSetColumnIndex(VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_FLAG); 
-            ImGui::Text(flags[row]);
+                //flag
+                ImGui::TableSetColumnIndex(VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_FLAG); 
+                ImGui::Text(flags[row]);
 
-            //description
-            ImGui::TableSetColumnIndex(VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_DESCRIPTION);
-            ImGui::Text(descriptions[row]);
+                //description
+                ImGui::TableSetColumnIndex(VCBAT_GUI_CL_OPTIONS_TABLE_COLUMN_INDEX_DESCRIPTION);
+                ImGui::Text(descriptions[row]);
+            }
+
+            ImGui::EndTable();
         }
-
-        ImGui::EndTable();
     }    
 }
 

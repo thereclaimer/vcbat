@@ -165,72 +165,84 @@ vcbat_win32_platform_api_free_memory(handle memory, u64 size) {
     VirtualFree(memory,size,MEM_RELEASE);
 }
 
-internal int CALLBACK
-vcbat_win32_platform_api_browse_dialog_callback(
-    HWND   hwnd, 
-    UINT   msg, 
-    LPARAM l_param, 
-    LPARAM l_data) {
-
-    if (msg == BFFM_INITIALIZED) {
-        SendMessage(
-            hwnd, 
-            BFFM_SETSELECTION, 
-            TRUE, 
-            l_data);
-    }
-
-    return(0);
-}
-
 internal void
 vcbat_win32_platform_api_file_dialog(
     VCBatPlatformFileDialogOptions& options) {
 
     VCBatWin32WindowRef win32_window_ref = vcbat_win32_window_get();
-    switch(options.dialog_type) {
-        
-        case VCBatPlatformFileDialogType_File: {
+    options.user_made_selection = false;
 
-            OPENFILENAMEA open_file_name = {0};
-            open_file_name.lStructSize     = sizeof(OPENFILENAME);
-            open_file_name.hwndOwner       = win32_window_ref.handle_window;
-            open_file_name.lpstrFile       = options.selected_path;
-            open_file_name.lpstrFile[0]    = '\0';
-            open_file_name.nMaxFile        = VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH;
-            open_file_name.lpstrFilter     = "All\0*.*\0Text\0*.TXT\0";
-            open_file_name.nFilterIndex    = 1;
-            open_file_name.lpstrFileTitle  = NULL;
-            open_file_name.nMaxFileTitle   = 0;
-            open_file_name.lpstrInitialDir = NULL;
-            open_file_name.Flags           = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+    //initialize the file dialog pointer
+    IFileDialog* file_dialog_ptr = NULL;
 
-            bool path_selected = GetOpenFileNameA(&open_file_name);
-            if (path_selected) {
-                
-            }
+    HRESULT result = 
+        CoCreateInstance(
+            CLSID_FileOpenDialog, 
+            NULL, 
+            CLSCTX_ALL, 
+            IID_IFileDialog, 
+            reinterpret_cast<void**>(&file_dialog_ptr));
 
-        } break;
+    VCBAT_ASSERT(SUCCEEDED(result));
 
-        case VCBatPlatformFileDialogType_Directory: {
+    //get the options
+    DWORD win32_dialog_options;
+    file_dialog_ptr->GetOptions(&win32_dialog_options);
 
-            BROWSEINFOA browse_info = {0};
-            browse_info.ulFlags     = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-            browse_info.lpszTitle   = "Select a folder";
-            browse_info.lpfn        = vcbat_win32_platform_api_browse_dialog_callback;
-            browse_info.lParam      = (LPARAM)options.selected_path;
+    //set the options based on the arguments
+    win32_dialog_options |= 
+        options.dialog_type == VCBatPlatformFileDialogType_Directory
+            ? FOS_PATHMUSTEXIST | FOS_PICKFOLDERS 
+            : FOS_FILEMUSTEXIST;
 
-            LPITEMIDLIST item_list = SHBrowseForFolderA(&browse_info);
-            if (item_list) {
+    file_dialog_ptr->SetOptions(win32_dialog_options);
 
-                SHGetPathFromIDListA(item_list, options.selected_path);
-                CoTaskMemFree(item_list);
-            }
-
-        } break;
+    //show the dialog
+    result = file_dialog_ptr->Show(win32_window_ref.handle_window);
+    if (!SUCCEEDED(result)) {
+        return;
     }
 
+    //get the selected item
+    IShellItem* shell_item_ptr = NULL;
+    result = file_dialog_ptr->GetResult(&shell_item_ptr);
+    VCBAT_ASSERT(SUCCEEDED(result));
 
+    //get the display name of the item
+    LPWSTR display_name = NULL;
+    result = shell_item_ptr->GetDisplayName(
+        SIGDN_FILESYSPATH,
+        &display_name);
+    VCBAT_ASSERT(SUCCEEDED(result));
 
-    
+    //convert the display name to a const char
+    int size_needed = 
+        WideCharToMultiByte(
+            CP_UTF8, 
+            0, 
+            display_name, 
+            -1, 
+            NULL, 
+            0, 
+            NULL, 
+            NULL);
+        
+    VCBAT_ASSERT(size_needed < VCBAT_PLATFORM_FILE_DIALOG_PATH_LENGTH); 
+
+    WideCharToMultiByte(
+        CP_UTF8,
+        0,
+        display_name,
+        -1,
+        options.selected_path, 
+        size_needed,
+        NULL,
+        NULL);
+
+    //release the stuff we used
+    CoTaskMemFree(display_name);
+    shell_item_ptr->Release();
+    file_dialog_ptr->Release();
+
+    options.user_made_selection = true;
 }
