@@ -4,7 +4,7 @@
 
 internal VCBatGuiFileList
 vcbat_gui_file_list_create(
-    const char* file_list_name) {
+    char* file_list_name) {
 
     VCBatGuiFileList file_list; 
 
@@ -177,160 +177,194 @@ vcbat_gui_file_list_cstr_next(
     return(file_path_cstr);
 }
 
-// internal void
-// vbat_gui_file_list_render(
-//     VCBatGuiFileListRef file_list_ref) {
+internal void
+vbat_gui_file_list_render(
+    VCBatGuiFileListRef file_list_ref) {
 
-//     local char table_name[256];
+    //TODO: we dont have a way of removing duplicates, we should have a way to do that
+    ImGui::SeparatorText(file_list_ref.name);
 
-//     if (file_list_ref.count == 0) {
-//         ImGui::Text("(No source files added)");
-//     }
-//     else {
+    char add_button_name[32] = {0};
+    strcpy(add_button_name,"Add File##");
+    strcat(add_button_name,file_list_ref.name);
+    if (ImGui::Button(add_button_name)) {
 
-//         ImGuiTableFlags table_flags = 
-//             ImGuiTableFlags_RowBg;
-
-//         if (ImGui::BeginTable("Source Files",3,table_flags)) {
-
-//             ImGui::TableSetupColumn("path##souercefile", ImGuiTableColumnFlags_WidthStretch);
-//             ImGui::TableSetupColumn("path##udpate",      ImGuiTableColumnFlags_WidthFixed);
-//             ImGui::TableSetupColumn("path##remove",      ImGuiTableColumnFlags_WidthFixed);
-
-//             int row = 0;
-
-//             local char tmp_path[256];
-//             local s32  row_update_index = -1;
-
-//             char button_name_remove[512];
-//             char button_name_update[512];
-
-//             for (
-//                 const char* file_path = vcbat_gui_file_list_cstr_begin(source_file_list_ref);
-//                 file_path != NULL;
-//                 file_path = vcbat_gui_file_list_cstr_next(source_file_list_ref)) {
-
-//                 ImGui::TableNextRow();
-
-//                 //current row is being updated
-//                 if (row_update_index == -1) {
-
-//                     //file path readonly
-//                     ImGui::TableSetColumnIndex(0);
-//                     ImGui::Text(file_path);
-
-//                     //update
-//                     ImGui::TableSetColumnIndex(1);
-//                     strcat(button_name_update,"Update##");
-//                     strcat(button_name_update,file_path);
-//                     if (ImGui::Button(button_name_update)) {
-                        
-//                         //clear the tmp path 
-//                         memset(
-//                             tmp_path,
-//                             0,
-//                             256
-//                         );
-
-//                         //copy the file path to the tmp path
-//                         strcpy(
-//                             tmp_path,
-//                             file_path
-//                         );
-//                         row_update_index = row;
-//                     }
-
-//                     //remove
-//                     ImGui::TableSetColumnIndex(2);
-//                     strcat(button_name_remove,"Remove##");
-//                     strcat(button_name_remove,file_path);
-//                     if (ImGui::Button("Remove")) {
-//                         vcbat_gui_file_list_remove(source_file_list_ref,row);
-//                     }
-//                 }
-
-//                 //the current row is being updated
-//                 else if (row_update_index == row) {
-
-//                     //file path input
-//                     ImGui::TableSetColumnIndex(0);
-//                     ImGui::InputText(
-//                         "##file_path_update",
-//                         tmp_path,
-//                         256);
-
-//                     //update
-//                     ImGui::TableSetColumnIndex(1);
-//                     if (ImGui::Button("Save##save_source")) {
-//                         vcbat_gui_file_list_update(source_file_list_ref,row,tmp_path);
-//                         row_update_index = -1;
-//                     }
-
-//                     //remove
-//                     ImGui::TableSetColumnIndex(2);
-//                     strcat(button_name_remove,"##browse_source");
-//                     strcat(button_name_remove,file_path);
-//                     if (ImGui::Button("Browse##browse_source")) {
-
-//                         VCBatPlatformFileDialogOptions dialog_options = {0};
-
-//                         dialog_options.dialog_type        = VCBatPlatformFileDialogType_File;
-//                         dialog_options.starting_directory = vcbat_build_settings_window.directories.working;
-
-//                         vcbat_platform_api_file_dialog(dialog_options);        
-
-//                         if (dialog_options.user_made_selection) {
-                            
-//                             memset(
-//                                 tmp_path,
-//                                 0,
-//                                 256);
-
-//                             strcpy(tmp_path,dialog_options.selected_path);
-//                             vcbat_gui_file_list_update(source_file_list_ref,row,tmp_path);
-//                             row_update_index = -1;
-//                         }
-
-//                     }
-//                 }
-
-//                 //a different row is being updated
-//                 else {
-                    
-//                     //file path readonly
-//                     ImGui::TableSetColumnIndex(0);
-//                     ImGui::Text(file_path);
-
-//                     //update
-//                     ImGui::TableSetColumnIndex(1);
-//                     //remove
-//                     ImGui::TableSetColumnIndex(2);
-//                 }
-
-//                 memset(button_name_remove,0,512);
-//                 memset(button_name_update,0,512);
-
-//                 row++;
-//             }
-
-//             ImGui::EndTable();
-//         }
-
-//     }
-
-//     if (ImGui::Button("Add Source File")) {
-
-//         VCBatPlatformFileDialogOptions dialog_options;
+        VCBatPlatformFileDialogOptions dialog_options;
         
-//         dialog_options.dialog_type        = VCBatPlatformFileDialogType_File;
-//         dialog_options.starting_directory = vcbat_build_settings_window.directories.working;
+        dialog_options.dialog_type        = VCBatPlatformFileDialogType_File;
+        dialog_options.starting_directory = vcbat_build_settings_window.directories.working;
 
-//         vcbat_platform_api_file_dialog(dialog_options);        
+        vcbat_platform_api_file_dialog(dialog_options);        
 
-//         vcbat_gui_file_list_add(
-//             source_file_list_ref,
-//             dialog_options.selected_path
-//         );
-//     }
+        vcbat_gui_file_list_add(
+            file_list_ref,
+            dialog_options.selected_path
+        );
+    }
 
-// }
+    //table columns 
+    char column_name_text[32] = {0};
+    char column_name_btn1[32] = {0};
+    char column_name_btn2[32] = {0};
+
+    strcpy(column_name_text,file_list_ref.name);
+    strcpy(column_name_btn1,file_list_ref.name);
+    strcpy(column_name_btn2,file_list_ref.name);
+
+    strcat(column_name_text,"##text");
+    strcat(column_name_btn1,"##btn1");
+    strcat(column_name_btn2,"##btn2");
+
+    //button names
+    char button_1_name[512] = {0};
+    char button_2_name[512] = {0};
+
+    ImGuiTableFlags table_flags = 
+        ImGuiTableFlags_RowBg;
+
+    if (ImGui::BeginTable("Source Files",3,table_flags)) {
+
+        u32 button_column_width = vcbat_gui_text_width_pixels("Browse");
+
+        ImGui::TableSetupColumn(column_name_text, ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn(column_name_btn1, ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn(column_name_btn2, ImGuiTableColumnFlags_WidthStretch);
+
+        std::atof
+
+        ImGui::TableSetColumnWidth(1.button_column_width);
+        ImGui::TableSetColumnWidth(2,);
+
+        int row = 0;
+
+        local char tmp_path[256];
+        local s32  row_update_index = -1;
+
+        char button_name_remove[512] = {0};
+        char button_name_update[512] = {0};
+
+        for (
+            const char* file_path = vcbat_gui_file_list_cstr_begin(file_list_ref);
+            file_path != NULL;
+            file_path = vcbat_gui_file_list_cstr_next(file_list_ref)) {
+
+            VCBAT_ASSERT(file_path);
+            
+            ImGui::TableNextRow();
+
+            //current row is being updated
+            if (row_update_index == -1) {
+
+                //file path readonly
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text(file_path);
+
+                //update
+                ImGui::TableSetColumnIndex(1);
+                
+                strcpy(button_1_name,"Update##");
+                strcat(button_1_name,file_list_ref.name);
+                strcat(button_1_name,file_path);
+
+                if (ImGui::Button(button_1_name)) {
+                    
+                    //clear the tmp path 
+                    memset(
+                        tmp_path,
+                        0,
+                        256
+                    );
+
+                    //copy the file path to the tmp path
+                    strcpy(
+                        tmp_path,
+                        file_path
+                    );
+                    row_update_index = row;
+                }
+
+                //remove
+                ImGui::TableSetColumnIndex(2);
+
+                strcpy(button_2_name,"Remove##");
+                strcat(button_2_name,file_list_ref.name);
+                strcat(button_2_name,file_path);
+                if (ImGui::Button(button_2_name)) {
+                    vcbat_gui_file_list_remove(file_list_ref,row);
+                }
+            }
+
+            //the current row is being updated
+            else if (row_update_index == row) {
+
+                //file path input
+                ImGui::TableSetColumnIndex(0);
+                ImGui::InputText(
+                    "##file_path_update",
+                    tmp_path,
+                    256);
+
+                //update
+                ImGui::TableSetColumnIndex(1);
+                
+                strcpy(button_1_name,"Save##");
+                strcat(button_1_name,file_list_ref.name);
+                strcat(button_1_name,file_path);
+                
+                if (ImGui::Button(button_1_name)) {
+                    vcbat_gui_file_list_update(file_list_ref,row,tmp_path);
+                    row_update_index = -1;
+                }
+
+                //remove
+                ImGui::TableSetColumnIndex(2);
+
+                strcpy(button_2_name,"Browse##");
+                strcat(button_2_name,file_list_ref.name);
+                strcat(button_2_name,file_path);
+                if (ImGui::Button(button_2_name)) {
+
+                    VCBatPlatformFileDialogOptions dialog_options = {0};
+
+                    dialog_options.dialog_type        = VCBatPlatformFileDialogType_File;
+                    dialog_options.starting_directory = vcbat_build_settings_window.directories.working;
+
+                    vcbat_platform_api_file_dialog(dialog_options);        
+
+                    if (dialog_options.user_made_selection) {
+                        
+                        memset(
+                            tmp_path,
+                            0,
+                            256);
+
+                        strcpy(tmp_path,dialog_options.selected_path);
+                        vcbat_gui_file_list_update(file_list_ref,row,tmp_path);
+                        row_update_index = -1;
+                    }
+
+                }
+            }
+
+            //a different row is being updated
+            else {
+                
+                //file path readonly
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text(file_path);
+
+                //update
+                ImGui::TableSetColumnIndex(1);
+                //remove
+                ImGui::TableSetColumnIndex(2);
+            }
+
+            memset(button_1_name,0,512);
+            memset(button_2_name,0,512);
+
+            row++;
+        }
+
+        ImGui::EndTable();
+    }
+}

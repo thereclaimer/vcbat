@@ -172,12 +172,12 @@ struct VCBatGuiFileList {
     memory                 memory;
     u32                    count;
     u32                    index;
-    const char*            name;
+    char*                  name;
 };
 
 VCBatGuiFileList
 vcbat_gui_file_list_create(
-    const char* file_list_name);
+    char* file_list_name);
 
 void
 vcbat_gui_file_list_reset(
